@@ -54,7 +54,10 @@ ROOT_URLCONF = 'polar_auth.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            'users/templates',
+            'polar_auth/templates'
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -100,6 +103,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTH_USER_MODEL = 'users.User'
+
+LOGIN_URL = '/login'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
