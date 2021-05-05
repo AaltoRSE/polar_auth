@@ -55,8 +55,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            'users/templates',
-            'polar_auth/templates'
+            'templates',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
