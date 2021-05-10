@@ -3,10 +3,12 @@
 {% block content %}
   <h2>Profile</h2>
 
-  <p>{{ object.username }}</p>
-  <p>{{ object.first_name }}</p>
-  <p>{{ object.last_name }}</p>
-  <p>{{ object.email }}</p>
-  <p>{{ object.oauth2_token }}</p>
+  <table>
+  <tr><td>Username: </td><td>{{ object.username }}</td></tr>
+  <tr><td>First name: </td><td>{{ object.first_name }}</td></tr>
+  <tr><td>Last name: </td><td>{{ object.last_name }}</td></tr>
+  <tr><td>Email: </td><td>{{ object.email }}</td></tr>
+  <tr><td>Token: </td><td>{{ object.oauth2_token }}</td></tr>
+  </table>
 
 {% endblock %}
