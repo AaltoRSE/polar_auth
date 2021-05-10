@@ -30,9 +30,12 @@ class RegistrationView(SuccessMessageMixin, CreateView):
 class AddAuthTokenView(RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
-        User = self.request.user
-        print(self.request)
-        key = self.request.GET.get('code', '')
-        print(key)
+        user = self.request.user
+        print(user)
+        token = self.request.GET.get('code', '')
+        print(token)
+
+        user.oauth2_token = token
+        user.save()
 
         return reverse_lazy('home')
