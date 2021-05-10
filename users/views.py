@@ -32,6 +32,7 @@ class AddAuthTokenView(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         User = self.request.user
         print(self.request)
-        key = self.request.code
+        key = self.request.GET.get('code', '')
+        print(key)
 
         return reverse_lazy('home')
