@@ -34,21 +34,16 @@ class RegistrationView(SuccessMessageMixin, CreateView):
 class AddAuthTokenView(RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
+        # The user get's redirected here with a token in the url
         user = self.request.user
-        print(user)
         token = self.request.GET.get('code', '')
-        print(self.request.GET)
-        print(token)
 
-        # user the received code to request an access token
+        # We ask for an access token using the received token
+        # (this is where we authenticate ourselves)
         auth = f'{polar_key}:{polar_secret}'
         auth_bytes = auth.encode('ascii')
         base64_bytes = base64.b64encode(auth_bytes)
         base64_auth = base64_bytes.decode('ascii')
-        print(base64_auth)
-
-        import time
-        time.sleep(1)
 
         headers = {
           'Authorization': f'Basic {base64_auth}'
@@ -64,6 +59,17 @@ class AddAuthTokenView(RedirectView):
         user.polar_id = token_response["x_user_id"]
         user.access_token = token_response["access_token"]
         user.save()
+        print(user.polar_id)
+        print(user.access_token)
+
+        headers = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': f'Bearer {token_response["access_token"]}'
+        }
+        json={"member-id": user.username}
+
+        r = requests.post('https://www.polaraccesslink.com/v3/users', json=json, headers = headers)
 
         return reverse_lazy('home')
 
