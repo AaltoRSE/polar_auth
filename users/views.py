@@ -14,6 +14,11 @@ from users.forms import UserRegisterForm
 from polar_auth.settings import polar_key, polar_secret
 
 
+# Communicate the access token to the data server
+def communicate_token(polar_id, access_token, subject_id):
+    pass
+
+
 @method_decorator(login_required, name='dispatch')
 class UserDetailView(DetailView):
     model = User
@@ -55,9 +60,11 @@ class AddAuthTokenView(RedirectView):
                           headers=headers
                           ).json()
 
-        user.oauth2_token = token
         user.polar_id = token_response["x_user_id"]
-        user.access_token = token_response["access_token"]
+        access_token = token_response["access_token"]
+        subject_id = uuid.uuid1().int>>64
+        # Send the user information to the data server
+        communicate_token(user.polar_id, access_token, subject_id)
         user.save()
         print(user.polar_id)
         print(user.access_token)
