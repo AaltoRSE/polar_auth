@@ -18,13 +18,16 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 
 import users.views
+import polar_auth.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='login')),
     path('registration/', users.views.RegistrationView.as_view(), name='registration'),
-    path('', users.views.UserDetailView.as_view(), name='home'),
+    path('home', users.views.UserDetailView.as_view(), name='home'),
+    path('', users.views.MainView.as_view(), name='main'),
+    path('about/', polar_auth.views.about_view, name='about'),
     path('token/', users.views.AddAuthTokenView.as_view(), name='auth_return'),
     path('authorize/', users.views.GetAuthenticationView.as_view(), name='auth')
 ]
