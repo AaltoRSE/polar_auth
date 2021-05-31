@@ -19,6 +19,18 @@ def communicate_token(polar_id, access_token, subject_id):
     pass
 
 
+class MainView(RedirectView):
+    ''' The main page. Redirect to about if not logged in or
+    to home if logged in.
+    '''
+
+    def get_redirect_url(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return reverse_lazy('home')
+        else:
+            return reverse_lazy('about')
+
+
 @method_decorator(login_required, name='dispatch')
 class UserDetailView(DetailView):
     model = User
