@@ -4,7 +4,21 @@
   <h2>Registration</h2>
   <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    <table class="form"> <tbody>
+    {% for field in form %}
+      <tr>
+      <th>
+        {{ field.errors }}
+        {{ field.label }}{% if field.field.required %} * {% endif %}:
+      </th>
+      <td>
+        {{ field.errors }} {{ field }}
+        </br>
+        {{ field.help_text }}
+      </td>
+      <tr>
+    {% endfor %}
+    </tbody></table>
     <button type="submit">Register</button>
   </form>
 {% endblock %}
