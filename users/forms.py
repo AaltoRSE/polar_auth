@@ -10,3 +10,9 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['email']
+
+
+class ConsentForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['consent']

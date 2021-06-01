@@ -7,16 +7,16 @@ from users.models import User
 # Register your models here.
 class CustomUserAdmin(UserAdmin):
     model = User
-    list_display = ('email', 'is_staff', 'is_active',)
-    list_filter = ('email', 'is_staff', 'is_active',)
+    list_display = ('email', 'consent', 'is_staff', 'is_active',)
+    list_filter = ('email', 'consent', 'is_staff', 'is_active',)
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
+        (None, {'fields': ('email', 'consent', 'password')}),
         ('Permissions', {'fields': ('is_staff', 'is_active')}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password', 'is_staff', 'is_active')}
+            'fields': ('email', 'consent', 'password', 'is_staff', 'is_active')}
          ),
     )
     search_fields = ('email',)

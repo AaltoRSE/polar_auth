@@ -18,6 +18,9 @@ class User(AbstractUser):
     first_name = None
     last_name = None
 
+    # Add a field for consent
+    consent = models.BooleanField('consent')
+
     # We use the polar_id to identify the user to the data server.
     # This could, in principle, be identify the user, but we already
     # store the email here in any case.

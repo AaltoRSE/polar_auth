@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Participation confirmation</h2>
+<p>
+<i>Comparison of Routines: Old vs New Activity</i>
+</p>
+<p>
+This study monitors how the activity patterns of participants vary during the transition from remote working to in-person working. The activity patterns are measured primarily via wrist-worn fitness trackers and surveys.
+</p>
+<p>
+I have understood that participation is voluntary and at any point in the research study, I am at liberty to notify that I no longer wish to participate in the study, but all the information gathered up until that point can be used as described in the privacy notice of the research study.
+</p>
+<p>
+I have received sufficient information about the research study, I have had the possibility to have my questions answered, I have understood the information and I wish to participate in the research study.
+</p>
+
+<p>
+Please choose YES/NO:
+</p>
+<p>
+I have read and understood the Information Sheet (as well as the Privacy Notice included) that was given to me and I have sufficient information about the process of the research.
+</p>
+<p>
+YES / NO
+</p>
+<p>
+I understand that my participation in the research is completely voluntary and that I have the right to discontinue my participation at any stage.
+</p>
+<p>
+YES / NO
+</p>
+<p>
+I understand that the research data is gathered only for the purpose of scientific research in the public interest and I understand my rights regarding my personal data, as explained in the Privacy Notice.
+</p>
+<p>
+YES / NO
+</p>
+<p>
+I acknowledge that I have received the information necessary to make an informed decision about my participation in the research, my questions have been answered and I agree to volunteer as a research subject.
+</p>
+<p>
+YES / NO
+</p>
+  <form method="post">
+    {% csrf_token %}
+    <table class="form"> <tbody>
+    {% for field in form.visible_fields %}
+      <tr>
+      <td>
+        {% if field.errors %}
+          <p class="text-danger">{{ field.errors.as_text }}</p>
+        {% endif %}
+        {{ field }}
+      </td>
+    {% endfor %}
+    <td>
+      <button type="submit">Submit</button>
+    </td>
+    <tr>
+  </tbody></table>
+  </form>
+{% endblock %}
