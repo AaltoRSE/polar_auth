@@ -4,6 +4,15 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class User(AbstractUser):
+    # Remove the username as a separate field (we use email)
+    username = None
+
+    # Require email to be unique
+    email = models.EmailField('email address', unique=True)
+
+    # Set email as the username field
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
 
     # We use the polar_id to identify the user to the data server.
     # This could, in principle, be identify the user, but we already
