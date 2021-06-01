@@ -1,0 +1,7 @@
+/* This will match form fields in table format */
+
+.form > tbody > tr > th {
+  vertical-align: top;
+  width: 30%;
+}
+
