@@ -14,6 +14,10 @@ class User(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
+    # Also remove the name
+    first_name = None
+    last_name = None
+
     # We use the polar_id to identify the user to the data server.
     # This could, in principle, be identify the user, but we already
     # store the email here in any case.
