@@ -62,7 +62,7 @@ class User(AbstractUser):
     last_name = None
 
     # Add a field for consent
-    consent = models.BooleanField('consent')
+    consent = models.BooleanField('consent', default=True)
 
     # We use the polar_id to identify the user to the data server.
     # This could, in principle, be identify the user, but we already
