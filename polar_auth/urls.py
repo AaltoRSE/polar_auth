@@ -28,7 +28,7 @@ urlpatterns = [
     path('consent/', users.views.ConsentView.as_view(), name='consent'),
     path('home', users.views.UserDetailView.as_view(), name='home'),
     path('', users.views.MainView.as_view(), name='main'),
-    path('about/', polar_auth.views.about_view, name='about'),
+    path('about/', users.views.AboutView.as_view(), name='about'),
     path('token/', users.views.AddAuthTokenView.as_view(), name='auth_return'),
     path('authorize/', users.views.GetAuthenticationView.as_view(), name='auth')
 ]

@@ -32,6 +32,13 @@ class MainView(RedirectView):
             return reverse_lazy('about')
 
 
+class AboutView(SuccessMessageMixin, CreateView):
+    template_name = 'about.html'
+    success_url = reverse_lazy('about')
+    form_class = users.forms.SubscriptionForm
+    success_message = "Thank you for subscribing to updates."
+
+
 @method_decorator(login_required, name='dispatch')
 class UserDetailView(DetailView):
     model = User
