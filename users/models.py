@@ -18,7 +18,7 @@ class UserManager(BaseUserManager):
         user.admin = is_admin
         user.staff = is_staff
         user.active = is_active
-        user.is_superuser = False
+        user.is_superuser = is_admin
 
         # Consent always starts as False
         user.consent = False
