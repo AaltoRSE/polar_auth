@@ -1,5 +1,7 @@
 import requests
 import base64
+import uuid
+import paramiko
 
 from django.views.generic import DetailView
 from django.contrib.auth.decorators import login_required
@@ -13,11 +15,23 @@ from django.urls import reverse_lazy
 import users.forms
 from users.models import User
 from polar_auth.settings import polar_key, polar_secret
+from polar_auth.settings import data_server, data_folder, data_server_key
+
+# Set up an SSH client and add the data server key
+server_key = paramiko.RSAKey(data=base64.decodebytes(data_server_key))
+ssh_client = paramiko.SSHClient()
+ssh_client.get_host_keys().add(data_server, 'ssh-rsa', server_key)
 
 
 # Communicate the access token to the data server
 def communicate_token(polar_id, access_token, subject_id):
-    pass
+    ssh_client.connect(hostname=data_server)
+    sftp_client = ssh_client.open_sftp()
+    remote_file = data_folder + '/new_tokens'
+    token_file = sftp_client.file(remote_file, mode='a', bufsize=1)
+    token_file.write(f'{access_token} {polar_id} {subject_id}\n')
+    token_file.flush()
+    token_file.close()
 
 
 class MainView(RedirectView):
@@ -98,8 +112,6 @@ class AddAuthTokenView(RedirectView):
         # Send the user information to the data server
         communicate_token(user.polar_id, access_token, subject_id)
         user.save()
-        print(user.polar_id)
-        print(user.access_token)
 
         headers = {
             'Content-Type': 'application/json',
