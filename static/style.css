@@ -1,7 +1,11 @@
 /* This will match form fields in table format */
-
 .form > tbody > tr > th {
   vertical-align: top;
   width: 30%;
 }
 
+/* For some reason I cannot get the bootsrap float-right class to work
+   This is a drop-in replacement. */
+.img_float_right {
+  float: right
+}
