@@ -62,7 +62,10 @@ class User(AbstractUser):
     last_name = None
 
     # Add a field for consent
-    consent = models.BooleanField('consent', default=False)
+    consent = models.BooleanField('Consented to study', default=False)
+
+    # Add a field for approving the privacy statement
+    privacy = models.BooleanField('Agreed to privacy notice', default=False)
 
     # We use the polar_id to identify the user to the data server.
     # This could, in principle, be identify the user, but we already

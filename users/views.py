@@ -76,10 +76,21 @@ class RegistrationView(SuccessMessageMixin, CreateView):
     success_message = "Your profile was created successfully"
 
 
+class PrivacyView(SuccessMessageMixin, UpdateView):
+    model = User
+    template_name = 'users/privacy_notice.html'
+    success_url = reverse_lazy('consent')
+    form_class = users.forms.PrivacyForm
+    success_message = "Your reply has been registered succesfully."
+
+    def get_object(self):
+        return self.request.user
+
+
 class ConsentView(SuccessMessageMixin, UpdateView):
     model = User
     template_name = 'users/consent.html'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('about')
     form_class = users.forms.ConsentForm
     success_message = "Your consent has been registered succesfully"
 

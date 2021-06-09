@@ -12,10 +12,18 @@ class UserRegisterForm(UserCreationForm):
         fields = ['email']
 
 
+class PrivacyForm(forms.ModelForm):
+    privacy = forms.BooleanField(required=True)
+
+    class Meta:
+        model = User
+        fields = ['privacy']
+
+
 class ConsentForm(forms.ModelForm):
 
     # Consent consists of multiple questions. Add each here.
-    temp_id = forms.BooleanField()
+    temp_id = forms.BooleanField(required=True)
 
     class Meta:
         model = User

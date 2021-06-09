@@ -4,4 +4,23 @@
 
 <h4><a href="/">Back to the Main Page</a></h4>
 
+  <form method="post">
+    {% csrf_token %}
+    <table class="form"> <tbody>
+    {% for field in form.visible_fields %}
+      <tr>
+      <td>
+        {% if field.errors %}
+          <p class="text-danger">{{ field.errors.as_text }}</p>
+        {% endif %}
+        {{ field }}
+      </td>
+    {% endfor %}
+    <td>
+      <button type="submit">Submit</button>
+    </td>
+    <tr>
+  </tbody></table>
+  </form>
+
 {% endblock %}
