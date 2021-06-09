@@ -10,13 +10,22 @@
   </div>
 </div>
 <p> You are logged in as {{ user.email }}.</p>
-  {%if not user.privacy_agreement %}
-  <p> To participate in the study, please read read the <a href="/privacy">privacy statement</a>
-    and choose "I Agree" at the end.</p>
+
+{%if not user.ready_to_authorize %}
+  <p> To participate in the study, please
+
+  <ul>
+  {%if not user.privacy %}
+    <li> read the <a href="/privacy">privacy statement</a>
+    and choose "I Agree" at the end.</li>
   {% endif %}
+
   {%if not user.consent %}
-    <p> To participate in the study, please read read the <a href="/consent">consent form</a>
-and choose "I Consent" at the end.</p>
+    <li> read the <a href="/consent">consent form</a>
+and give your consent to partipate.</li>
+  {% endif %}
+  </ul>
+
 {% endif %}
 
 <h3> About the Study </h3>

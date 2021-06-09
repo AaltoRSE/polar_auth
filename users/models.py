@@ -75,6 +75,10 @@ class User(AbstractUser):
     # Set the user manager
     objects = UserManager()
 
+    def ready_to_authorize(self):
+        ''' Check if a user is ready to authorize data collection '''
+        return self.privacy and self.consent
+
     def __str__(self):
         return self.email
 
