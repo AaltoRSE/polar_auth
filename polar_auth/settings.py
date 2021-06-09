@@ -18,7 +18,7 @@ from .secret import *
 data_server = "127.0.0.1"
 data_folder = "/u/24/rantahj1/unix/src/polar_get"
 data_server_key = b"AAAAB3NzaC1yc2EAAAADAQABAAABAQC08Ws8rD3orCcYAlJAWyU+vq8zaUTD0D0kzmMCYbUYAZ+yVLdvTcrjhDOCo7ERFDwZie1HOXiykwC1//LhZihKaIPO5clqAksk9NB+EgAtRPFmv9PBO9P2Xz7WqXzDczEOQgbUEBzslB7I2xhbDQnXHLYOU+t/OH73i+41706HP+cORXaXeVJcuGkyBqwK19STIUUCvwrNzPfz6+6W0QF9CenwSFiPcSwihhNZfukg6jk38FU2NHJ9QRpCRzGc1IFB3kwl6aPpB8DZidjJLcfe8G1omsEbp6DXU6DJswkltljGxrwmyJ84/Hs+kq9jI1z9E4WU7uDRIlsZgkUL3UlH"
-rsa_key_file = "~/.ssh/id_rsa"
+rsa_key_file = "/u/24/rantahj1/unix/.ssh/id_rsa"
 ssh_username = None
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
