@@ -3,6 +3,30 @@
 
 {% block content %}
 
+
+{%if user.is_authenticated %}
+  <p> You are logged in as {{ user }}.</p>
+  {%if not user.privacy_agreement %}
+  <p> To participate in the study, please read read the <a href="privacy">privacy statement</a>
+    and choose "I Agree" at the end.</p>
+  {% endif %}
+  {%if not user.consent %}
+    <p> To participate in the study, please read read the <a href="consent">consent form</a>
+and choose "I Consent" at the end.</p>
+  {% endif %}
+{% endif %}
+
+{%if not user.is_authenticated %}
+<div class="row">
+  <div class="col">
+    <a class="btn btn-primary float-end mx-1" href="login">Register</a>
+    <a class="btn btn-primary float-end mx-1" href="login">Login</a>
+  </div>
+</div>
+{% endif %}
+
+<h3> About the Study </h3>
+
 <p>
 How has the pandemic changed our daily life?  What does "normal" even mean now? Take part in a research study on this topic and learn more about yourself and your routines in the process.
 </p>

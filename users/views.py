@@ -25,6 +25,8 @@ ssh_client.get_host_keys().add(data_server, 'ssh-rsa', server_key)
 
 # Communicate the access token to the data server
 def communicate_token(polar_id, access_token, subject_id):
+    ''' Communicate a token to the data server over ssh. '''
+
     ssh_client.connect(hostname=data_server)
     sftp_client = ssh_client.open_sftp()
     remote_file = data_folder + '/new_tokens'
@@ -52,6 +54,12 @@ class AboutView(SuccessMessageMixin, CreateView):
     form_class = users.forms.SubscriptionForm
     success_message = "Thank you for subscribing to updates."
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context['user'] = self.request.user
+        return context
+
 
 @method_decorator(login_required, name='dispatch')
 class UserDetailView(DetailView):
@@ -78,7 +86,6 @@ class ConsentView(SuccessMessageMixin, UpdateView):
 
     def get_object(self):
         return self.request.user
-
 
 
 @method_decorator(login_required, name='dispatch')

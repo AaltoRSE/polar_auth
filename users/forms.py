@@ -13,6 +13,10 @@ class UserRegisterForm(UserCreationForm):
 
 
 class ConsentForm(forms.ModelForm):
+
+    # Consent consists of multiple questions. Add each here.
+    temp_id = forms.BooleanField()
+
     class Meta:
         model = User
         fields = ['consent']
