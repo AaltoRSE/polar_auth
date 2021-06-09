@@ -17,18 +17,20 @@ import users.forms
 from users.models import User
 from polar_auth.settings import polar_key, polar_secret
 from polar_auth.settings import data_server, data_folder, data_server_key
+from polar_auth.settings import rsa_key_file, ssh_username
 
 # Set up an SSH client and add the data server key
 server_key = paramiko.RSAKey(data=base64.decodebytes(data_server_key))
 ssh_client = paramiko.SSHClient()
 ssh_client.get_host_keys().add(data_server, 'ssh-rsa', server_key)
+rsa_key = paramiko.RSAKey.from_private_key_file(rsa_key_file)
 
 
 # Communicate the access token to the data server
 def communicate_token(polar_id, access_token, subject_id):
     ''' Communicate a token to the data server over ssh. '''
 
-    ssh_client.connect(hostname=data_server)
+    ssh_client.connect(hostname=data_server, username=ssh_username, pkey=rsa_key)
     sftp_client = ssh_client.open_sftp()
     remote_file = data_folder + '/new_tokens'
     token_file = sftp_client.file(remote_file, mode='a', bufsize=1)
