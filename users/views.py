@@ -9,6 +9,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic.edit import CreateView
 from django.views.generic.base import RedirectView
 from django.views.generic.edit import UpdateView
+from django.views.generic import TemplateView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 
@@ -46,6 +47,16 @@ class MainView(RedirectView):
             return reverse_lazy('home')
         else:
             return reverse_lazy('about')
+
+
+class FAQView(TemplateView):
+    template_name = 'faq.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context['user'] = self.request.user
+        return context
 
 
 class AboutView(SuccessMessageMixin, CreateView):

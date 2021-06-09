@@ -30,5 +30,6 @@ urlpatterns = [
     path('', users.views.MainView.as_view(), name='main'),
     path('about/', users.views.AboutView.as_view(), name='about'),
     path('token/', users.views.AddAuthTokenView.as_view(), name='auth_return'),
-    path('authorize/', users.views.GetAuthenticationView.as_view(), name='auth')
+    path('authorize/', users.views.GetAuthenticationView.as_view(), name='auth'),
+    path('faq/', users.views.FAQView.as_view(), name='faq'),
 ]
