@@ -39,6 +39,16 @@ def communicate_token(polar_id, access_token, subject_id):
     token_file.close()
 
 
+class ConsentSuccessView(TemplateView):
+    template_name = 'consent_success.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context['user'] = self.request.user
+        return context
+
+
 class FAQView(TemplateView):
     template_name = 'faq.html'
 
@@ -151,7 +161,7 @@ class AddAuthTokenView(RedirectView):
 
         r = requests.post('https://www.polaraccesslink.com/v3/users', json=json, headers = headers)
 
-        return reverse_lazy('home')
+        return reverse_lazy('about')
 
 
 @method_decorator(login_required, name='dispatch')
