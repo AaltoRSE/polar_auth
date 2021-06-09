@@ -47,6 +47,16 @@ class FAQView(TemplateView):
         return context
 
 
+class TestView(TemplateView):
+    template_name = 'workflow_test.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context['user'] = self.request.user
+        return context
+
+
 class AboutView(SuccessMessageMixin, CreateView):
     template_name = 'about.html'
     success_url = reverse_lazy('about')

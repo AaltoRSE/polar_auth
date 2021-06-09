@@ -3,6 +3,35 @@
 
 {% block content %}
 
+{%if user.is_authenticated %}
+<div class="row">
+  <div class="col">
+    <a class="btn btn-primary float-end mx-1" href="logout">Logout</a>
+  </div>
+</div>
+<p> You are logged in as {{ user.email }}.</p>
+  {%if not user.privacy_agreement %}
+  <p> To participate in the study, please read read the <a href="/privacy">privacy statement</a>
+    and choose "I Agree" at the end.</p>
+  {% endif %}
+  {%if not user.consent %}
+    <p> To participate in the study, please read read the <a href="/consent">consent form</a>
+and choose "I Consent" at the end.</p>
+{% endif %}
+
+<h3> About the Study </h3>
+{% endif %}
+
+{%if not user.is_authenticated %}
+<div class="row">
+  <div class="col">
+    <a class="btn btn-primary float-end mx-1" href="/registration">Register</a>
+    <a class="btn btn-primary float-end mx-1" href="/login">Login</a>
+  </div>
+</div>
+{% endif %}
+
+
 <p>
 How has the pandemic changed our daily life?  What does "normal" even mean now? Take part in a research study on this topic and learn more about yourself and your routines in the process.
 </p>
@@ -28,13 +57,6 @@ This study is currently under review of the ethical  board of the Aalto Universi
 <p>
 Interested to volunteer as a participant or to find out more? Enter your email address and we will send you more information once the enrollment period starts (approximately mid June). By entering your email you are not committed to participate in the study.
 </p>
-
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-</br>
 
 <p>
 (If you would like us to remove your email, please contact us at <a href = "mailto: jarno.rantaharju@aalto.fi">jarno.rantaharju@aalto.fi</a>.)
