@@ -35,7 +35,22 @@ Interested to volunteer as a participant or to find out more? Enter your email a
 
 <form method="post">
   {% csrf_token %}
-  {{ form.as_p }}
+  <table class="form"> <tbody>
+    {% if form.email.errors %}
+    <tr>
+      <th></th>
+      <td><p class="text-danger">{{ form.email.errors.as_text }}</p></td>
+    </tr>
+    {% endif %}
+    <tr class="my-3">
+    <th>
+      <label for="id_email">Email (aalto.fi only):</label>
+    </th>
+    <td>
+      {{ form.email }}
+    </td>
+    <tr>
+    </tbody></table>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 </br>

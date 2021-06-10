@@ -51,7 +51,8 @@ class User(AbstractUser):
     username = None
 
     # Require email to be unique
-    email = models.EmailField('email address', unique=True)
+    email = models.EmailField('email address', unique=True,
+                              help_text="Email (aalto.fi only)")
 
     # Set email as the username field
     USERNAME_FIELD = 'email'
@@ -92,7 +93,7 @@ class User(AbstractUser):
 class Subscriber(models.Model):
     ''' This model only contains an email. Added emails are
     expressions of interest, not actual registrations.'''
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True, help_text="Email (aalto.fi only)")
 
     def __str__(self):
         return self.email
