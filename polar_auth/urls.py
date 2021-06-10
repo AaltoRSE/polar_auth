@@ -18,7 +18,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 
 import users.views
-import polar_auth.views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
