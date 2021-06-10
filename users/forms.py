@@ -15,6 +15,7 @@ class UserRegisterForm(UserCreationForm):
             raise ValidationError(
                     "Please provide an Aalto email address."
                 )
+        return email
 
     class Meta:
         model = User
@@ -62,6 +63,7 @@ class SubscriptionForm(forms.ModelForm):
             raise ValidationError(
                     "Please provide an Aalto email address."
                 )
+        return email
 
     class Meta:
         model = Subscriber
