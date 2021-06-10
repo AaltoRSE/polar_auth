@@ -82,15 +82,6 @@ class AboutView(SuccessMessageMixin, CreateView):
         return context
 
 
-@method_decorator(login_required, name='dispatch')
-class UserDetailView(DetailView):
-    model = User
-    template_name = "users/detailview.html"
-
-    def get_object(self):
-        return self.request.user
-
-
 class RegistrationView(SuccessMessageMixin, CreateView):
     template_name = 'users/registration.html'
     success_url = reverse_lazy('login')

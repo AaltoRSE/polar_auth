@@ -28,7 +28,6 @@ urlpatterns = [
     path('consent/', users.views.ConsentView.as_view(), name='consent'),
     path('consent-success/', users.views.ConsentView.as_view(), name='consent-success'),
     path('privacy/', users.views.PrivacyView.as_view(), name='privacy'),
-    path('home', users.views.UserDetailView.as_view(), name='home'),
     path('', users.views.AboutView.as_view(), name='main'),
     path('about/', users.views.AboutView.as_view(), name='about'),
     path('test/', users.views.TestView.as_view(), name='test'),
