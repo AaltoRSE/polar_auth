@@ -61,6 +61,12 @@ class User(AbstractUser):
     first_name = None
     last_name = None
 
+    # We do need an address to send the device to
+    address = models.CharField(
+                'address', max_length=50,
+                help_text='Address for sending the Polar sport tracker.'
+              )
+
     # Add a field for consent
     consent = models.BooleanField('Consented to study', default=False)
 

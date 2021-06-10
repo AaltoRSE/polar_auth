@@ -18,7 +18,7 @@ class UserRegisterForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['email']
+        fields = ['email', 'address']
 
 
 class PrivacyForm(forms.ModelForm):
