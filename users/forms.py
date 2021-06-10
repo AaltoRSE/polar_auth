@@ -8,10 +8,9 @@ from users.models import User, Subscriber
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
 
-    def clean(self):
+    def clean_email(self):
         ''' Validate Aalto email addresses. '''
-        cleaned_data = super().clean()
-        email = cleaned_data.get("email")
+        email = self.cleaned_data['email']
         if not email.endswith("@aalto.fi"):
             raise ValidationError(
                     "Please provide an Aalto email address."
@@ -56,10 +55,9 @@ class ConsentForm(forms.ModelForm):
 class SubscriptionForm(forms.ModelForm):
     email = forms.EmailField()
 
-    def clean(self):
+    def clean_email(self):
         ''' Validate Aalto email addresses. '''
-        cleaned_data = super().clean()
-        email = cleaned_data.get("email")
+        email = self.cleaned_data['email']
         if not email.endswith("@aalto.fi"):
             raise ValidationError(
                     "Please provide an Aalto email address."
