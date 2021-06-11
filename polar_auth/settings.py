@@ -34,6 +34,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Result directories for the survey app
+CSV_DIRECTORY = Path("csv")
+TEX_DIRECTORY = Path("tex")
 
 # Application definition
 
@@ -45,6 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users',
+    'bootstrapform',
+    'survey',
 ]
 
 MIDDLEWARE = [

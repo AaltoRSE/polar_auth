@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.contrib.auth import views as auth_views
 
 import users.views
@@ -34,4 +34,5 @@ urlpatterns = [
     path('token/', users.views.AddAuthTokenView.as_view(), name='auth_return'),
     path('authorize/', users.views.GetAuthenticationView.as_view(), name='auth'),
     path('faq/', users.views.FAQView.as_view(), name='faq'),
+    path(r'survey/', include('survey.urls'))
 ]
