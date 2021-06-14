@@ -12,7 +12,7 @@
 <p> You are logged in as {{ user.email }}.</p>
 
 {%if not user.ready_to_authorize %}
-  <p> To participate in the study, please
+  <p> <b>To participate in the study</b>, please
 
   <ul>
   {%if not user.privacy %}
@@ -24,9 +24,45 @@
     <li> read the <a href="/consent">consent form</a>
 and give your consent to partipate.</li>
   {% endif %}
+
+  {%if not user.first_survey_done %}
+    <li> complete the <a href="/surveys/1">initial survey</a>.</li>
+  {% endif %}
   </ul>
 
+  <p>
+    After completing these steps, you we will send you a Polar Ignite fitness
+    tracker.
 {% endif %}
+
+{%if user.ready_to_authorize %}
+  <p>
+    Thank you for taking part in the study. If you do not receive you Polar
+    Ignite sport tracker within a couple of weeks, please contact us check
+    if there are any problems.
+  </p>
+  <p>
+{% endif %}
+
+    To use the device, you will need to install the Polar Flow app. The app
+    is available on
+    <a href="https://play.google.com/store/apps/details?id=fi.polar.polarflow">Android</a>
+    and on
+    <a href="https://apps.apple.com/us/app/polar-flow/id717172678">IOS</a>,
+    as well as on
+    <a href="https://flow.polar.com/start">Windows and OS X</a>.
+    You can view your data on the app itself or using the
+    <a href="https://flow.polar.com">web interface</a>.
+  </p>
+
+  <p>
+    When you have set up the device and created a Polar Flow account,
+    <ul>
+      <li> <a href="/authorize">click here</a> to authorize the study to
+      access the information required for the study.</li>
+    </ul>
+  </p>
+
 
 <h3> About the Study </h3>
 {% endif %}
