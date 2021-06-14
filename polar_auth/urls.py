@@ -34,5 +34,5 @@ urlpatterns = [
     path('token/', users.views.AddAuthTokenView.as_view(), name='auth_return'),
     path('authorize/', users.views.GetAuthenticationView.as_view(), name='auth'),
     path('faq/', users.views.FAQView.as_view(), name='faq'),
-    path(r'survey/', include('survey.urls'))
+    path(r'surveys/', include('survey.urls'))
 ]
