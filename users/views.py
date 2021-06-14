@@ -40,7 +40,7 @@ def communicate_token(polar_id, access_token, subject_id):
 
 
 class ConsentSuccessView(TemplateView):
-    template_name = 'consent_success.html'
+    template_name = 'users/consent_success.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

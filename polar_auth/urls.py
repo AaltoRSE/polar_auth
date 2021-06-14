@@ -26,7 +26,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(next_page='main'), name='logout'),
     path('registration/', users.views.RegistrationView.as_view(), name='registration'),
     path('consent/', users.views.ConsentView.as_view(), name='consent'),
-    path('consent-success/', users.views.ConsentView.as_view(), name='consent-success'),
+    path('consent-success/', users.views.ConsentSuccessView.as_view(), name='consent-success'),
     path('privacy/', users.views.PrivacyView.as_view(), name='privacy'),
     path('', users.views.AboutView.as_view(), name='main'),
     path('about/', users.views.AboutView.as_view(), name='about'),
