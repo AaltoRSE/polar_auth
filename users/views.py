@@ -1,6 +1,5 @@
 import requests
 import base64
-import uuid
 import paramiko
 
 from django.views.generic import DetailView
@@ -138,9 +137,9 @@ class AddAuthTokenView(RedirectView):
 
         user.polar_id = token_response["x_user_id"]
         access_token = token_response["access_token"]
-        subject_id = uuid.uuid1().int>>64
+
         # Send the user information to the data server
-        communicate_token(user.polar_id, access_token, subject_id)
+        communicate_token(user.polar_id, access_token, user.user_id)
         user.save()
 
         headers = {

@@ -1,7 +1,8 @@
+import uuid
+
 from django.db import models
 from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth.models import AbstractUser
-
 
 # Create your models here.
 class UserManager(BaseUserManager):
@@ -23,6 +24,9 @@ class UserManager(BaseUserManager):
         # Consent always starts as False
         user.consent = False
 
+        # Create a subject id
+        user.user_id = uuid.uuid1().int>>64
+
         user.save()
         return user
 
@@ -41,6 +45,9 @@ class UserManager(BaseUserManager):
         user.active = True
         user.is_superuser = True
         user.consent = False
+
+        # Create a user id
+        user.user_id
 
         user.save()
         return user
@@ -79,6 +86,9 @@ class User(AbstractUser):
     # store the email here in any case.
     polar_id = models.CharField(max_length=20, null=True, blank=True)
 
+    # Before we have access to the polar_id, we need a user ID for the survey
+    user_id = models.CharField('ID')
+
     # Set the user manager
     objects = UserManager()
 
@@ -97,4 +107,3 @@ class Subscriber(models.Model):
 
     def __str__(self):
         return self.email
-        
