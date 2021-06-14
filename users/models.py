@@ -47,7 +47,7 @@ class UserManager(BaseUserManager):
         user.consent = False
 
         # Create a user id
-        user.user_id
+        user.user_id = uuid.uuid1().int>>64
 
         user.save()
         return user
@@ -87,7 +87,7 @@ class User(AbstractUser):
     polar_id = models.CharField(max_length=20, null=True, blank=True)
 
     # Before we have access to the polar_id, we need a user ID for the survey
-    user_id = models.CharField('ID')
+    user_id = models.CharField('ID', max_length=32, blank=True)
 
     # Set the user manager
     objects = UserManager()

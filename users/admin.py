@@ -8,16 +8,16 @@ from .models import Subscriber
 # Register your models here.
 class CustomUserAdmin(UserAdmin):
     model = User
-    list_display = ('email', 'consent', 'privacy', 'is_active',)
-    list_filter = ('email', 'consent', 'privacy', 'is_active',)
+    list_display = ('email', 'consent', 'privacy', 'is_active', 'user_id',)
+    list_filter = ('email', 'consent', 'privacy', 'is_active', 'user_id',)
     fieldsets = (
-        (None, {'fields': ('email', 'consent', 'privacy', 'password')}),
+        (None, {'fields': ('email', 'consent', 'privacy', 'password', 'user_id')}),
         ('Permissions', {'fields': ('is_superuser', 'is_active')}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'consent', 'privacy', 'password',
+            'fields': ('email', 'consent', 'privacy', 'password', 'user_id',
                        'is_superuser', 'is_active')}
          ),
     )

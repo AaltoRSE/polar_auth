@@ -1,3 +1,5 @@
+import uuid
+
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
@@ -17,9 +19,17 @@ class UserRegisterForm(UserCreationForm):
                 )
         return email
 
+    def clean(self):
+        ''' Create a random user_id '''
+        cleaned_data = super().clean()
+        cleaned_data['user_id'] = uuid.uuid1().int>>64
+        print(cleaned_data['user_id'])
+        return cleaned_data
+
     class Meta:
         model = User
-        fields = ['email', 'address']
+        fields = ['email', 'address', 'user_id']
+        widgets = {'user_id': forms.HiddenInput()}
 
 
 class PrivacyForm(forms.ModelForm):
