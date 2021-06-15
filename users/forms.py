@@ -22,7 +22,7 @@ class UserRegisterForm(UserCreationForm):
     def clean(self):
         ''' Create a random user_id '''
         cleaned_data = super().clean()
-        cleaned_data['user_id'] = uuid.uuid1().int>>64
+        cleaned_data['user_id'] = int(uuid.uuid1().int>>96)
         print(cleaned_data['user_id'])
         return cleaned_data
 

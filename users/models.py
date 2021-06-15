@@ -25,7 +25,7 @@ class UserManager(BaseUserManager):
         user.consent = False
 
         # Create a subject id
-        user.user_id = uuid.uuid1().int>>64
+        user.user_id = int(uuid.uuid1().int>>96)
 
         user.save()
         return user
@@ -47,7 +47,7 @@ class UserManager(BaseUserManager):
         user.consent = False
 
         # Create a user id
-        user.user_id = uuid.uuid1().int>>64
+        user.user_id = int(uuid.uuid1().int>>96)
 
         user.save()
         return user
