@@ -28,12 +28,13 @@ class UserRegisterForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['email', 'address', 'user_id']
+        fields = ['email', 'address', 'user_id', 'has_own_device']
         widgets = {'user_id': forms.HiddenInput()}
 
 
 class PrivacyForm(forms.ModelForm):
-    privacy = forms.BooleanField(required=True)
+    widget = forms.CheckboxInput(attrs={'class': 'form-check-input'})
+    privacy = forms.BooleanField(required=True, widget=widget)
 
     class Meta:
         model = User

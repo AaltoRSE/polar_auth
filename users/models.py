@@ -3,6 +3,8 @@ import uuid
 from django.db import models
 from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth.models import AbstractUser
+from django.utils.safestring import mark_safe
+
 
 # Create your models here.
 class UserManager(BaseUserManager):
@@ -72,8 +74,19 @@ class User(AbstractUser):
     # We do need an address to send the device to
     address = models.CharField(
                 'address', max_length=50,
-                help_text='Address for sending the Polar sport tracker.'
+                help_text=mark_safe(
+                  "<ul><li>Address for sending the Polar sport tracker. (don't fill if you have one.)</li></ul>"
+                )
               )
+
+    # Whether the user already has a Polar Ignite. If so, we don't need to send
+    # one
+    has_own_device = models.BooleanField(
+            "I have a Polar Ignite", default=False,
+            help_text=mark_safe(
+              "<ul><li>Check this if you don't want us to send you a device.</li></ul>"
+            )
+        )
 
     # Track the three steps that the user needs to complete before they have
     # signed up to the study.
