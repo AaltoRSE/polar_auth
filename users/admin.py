@@ -11,13 +11,13 @@ class CustomUserAdmin(UserAdmin):
     list_display = ('email', 'consent', 'privacy', 'first_survey_done', 'is_active', 'user_id',)
     list_filter = ('email', 'consent', 'privacy', 'first_survey_done', 'is_active', 'user_id',)
     fieldsets = (
-        (None, {'fields': ('email', 'consent', 'privacy', 'first_survey_done', 'password', 'user_id')}),
+        (None, {'fields': ('email', 'address', 'consent', 'privacy', 'first_survey_done', 'password', 'user_id')}),
         ('Permissions', {'fields': ('is_superuser', 'is_active')}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'consent', 'privacy', 'first_survey_done', 'password', 'user_id',
+            'fields': ('email', 'address', 'consent', 'privacy', 'first_survey_done', 'password', 'user_id',
                        'is_superuser', 'is_active')}
          ),
     )
