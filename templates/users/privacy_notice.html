@@ -13,13 +13,15 @@
         {% if field.errors %}
           <p class="text-danger">{{ field.errors.as_text }}</p>
         {% endif %}
-        {{ field }}
+        <p> {{ field }} I have read and understood the privacy statement. </p>
       </td>
+      </tr>
     {% endfor %}
-    <td>
-      <button type="submit">Submit</button>
-    </td>
     <tr>
+      <td>
+      <button class="btn-primary btn" type="submit">Submit</button>
+      </td>
+    </tr>
   </tbody></table>
   </form>
 
