@@ -8,11 +8,11 @@
     {% csrf_token %}
     <table class="form"> <tbody>
     {% for field in form.visible_fields %}
-      <tr class="py-2">
-      <th class="py-2">
+      <tr>
+      <th class="py-1">
         {{ field.label }}{% if field.field.required %} * {% endif %}:
       </th>
-      <td class="py-2">
+      <td class="py-1">
         {% if field.errors %}
           <p class="text-danger">{{ field.errors.as_text }}</p>
         {% endif %}
@@ -21,7 +21,6 @@
         {{ field.help_text }}
       </td>
       </tr>
-      <tr class="py-2"><td></td></tr>
     {% endfor %}
     </tbody></table>
     <button type="submit">Register</button>
