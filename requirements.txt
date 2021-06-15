@@ -1,2 +1,2 @@
 Django==3.2
-django-survey-and-report
+git+git://github.com/AaltoRSE/django-survey
