@@ -73,9 +73,9 @@ class User(AbstractUser):
 
     # We do need an address to send the device to
     address = models.CharField(
-                'address', max_length=50,
+                'address', max_length=50, blank=True,
                 help_text=mark_safe(
-                  "<ul><li>Address for sending the Polar sport tracker. (don't fill if you have one.)</li></ul>"
+                  "<ul><li>Address for sending the Polar sport tracker. (Don't fill if you already have one.)</li></ul>"
                 )
               )
 
