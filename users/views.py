@@ -102,7 +102,7 @@ class PrivacyView(SuccessMessageMixin, UpdateView):
 class ConsentView(SuccessMessageMixin, UpdateView):
     model = User
     template_name = 'users/consent.html'
-    success_url = reverse_lazy('consent-success')
+    success_url = '/surveys/1'
     form_class = users.forms.ConsentForm
     success_message = "Your consent has been registered succesfully"
 
