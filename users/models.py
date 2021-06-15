@@ -75,11 +75,11 @@ class User(AbstractUser):
                 help_text='Address for sending the Polar sport tracker.'
               )
 
-    # Add a field for consent
+    # Track the three steps that the user needs to complete before they have
+    # signed up to the study.
     consent = models.BooleanField('Consented to study', default=False)
-
-    # Add a field for approving the privacy statement
     privacy = models.BooleanField('Agreed to privacy notice', default=False)
+    first_survey_done = models.BooleanField('Filled first survey', default=False)
 
     # We use the polar_id to identify the user to the data server.
     # This could, in principle, be identify the user, but we already
@@ -94,7 +94,7 @@ class User(AbstractUser):
 
     def ready_to_authorize(self):
         ''' Check if a user is ready to authorize data collection '''
-        return self.privacy and self.consent
+        return self.privacy and self.consent and self.first_survey_done
 
     def __str__(self):
         return self.email
