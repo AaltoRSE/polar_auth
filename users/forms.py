@@ -94,9 +94,6 @@ class SubscriptionForm(forms.ModelForm):
                 )
         return email
 
-    def save(self):
-        user = super().save(commit=False)
-
     class Meta:
         model = Subscriber
         fields = ['email']
