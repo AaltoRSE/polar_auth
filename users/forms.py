@@ -35,9 +35,10 @@ class UserRegisterForm(UserCreationForm):
         cleaned_data['user_id'] = int(uuid.uuid1().int>>96)
         return cleaned_data
 
-    def save(self):
-        user = super().save(commit=False)
+    def save(self, commit=True):
+        user = super().save(commit)
         send_registration_email(user.email)
+        return user
 
     class Meta:
         model = User
@@ -49,10 +50,11 @@ class PrivacyForm(forms.ModelForm):
     widget = forms.CheckboxInput(attrs={'class': 'form-check-input'})
     privacy = forms.BooleanField(required=True, widget=widget)
 
-    def save(self):
-        user = super().save(commit=False)
+    def save(self, commit=True):
+        user = super().save(commit)
         if user.ready_to_authorize():
             send_enrolment_email(user.email)
+        return user
 
     class Meta:
         model = User
@@ -73,6 +75,12 @@ class ConsentForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['consent']
+
+    def save(self, commit=True):
+        user = super().save(commit)
+        if user.ready_to_authorize():
+            send_enrolment_email(user.email)
+        return user
 
     def clean(self):
         ''' If the form gets submitted, the user has consented to all the
