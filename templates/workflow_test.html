@@ -14,9 +14,10 @@
 
 <div class="card my-5">
   <div class="card-body">
-    <h4 class="card-title">Enrolment steps</h4>
 
 {%if not user.ready_to_authorize %}
+    <h4 class="card-title">Enrolment steps</h4>
+
 <p><b>To get started, please:</b></p>
   <ul>
   {%if not user.privacy %}
