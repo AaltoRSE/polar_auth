@@ -94,6 +94,9 @@ class User(AbstractUser):
     privacy = models.BooleanField('Agreed to privacy notice', default=False)
     first_survey_done = models.BooleanField('Filled first survey', default=False)
 
+    # True if the user has given authorization (and not removed it)
+    authorized = models.BooleanField('Authorized access', default=False)
+
     # We use the polar_id to identify the user to the data server.
     # This could, in principle, be identify the user, but we already
     # store the email here in any case.
