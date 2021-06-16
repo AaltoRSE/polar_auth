@@ -28,4 +28,4 @@ If you have any questions, contact us at <>.
     #send_mail(
     #    subject, message, from_address,
     #    [address], fail_silently=False,
-    )
+    #)
