@@ -158,3 +158,11 @@ else:
 # Always use secure cookies
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = ''
+EMAIL_PORT = 1025
+EMAIL_HOST_USER= ''
+EMAIL_HOST_PASSWORD= ''
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = False
