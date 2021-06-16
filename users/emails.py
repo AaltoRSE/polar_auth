@@ -11,10 +11,10 @@ Thank you for participating in the cor:ona study. You have completed the steps r
 
 If you have any questions, contact us at talayeh.aledavood@aalto.fi.
     '''
-    #send_mail(
-    #    subject, message, from_address,
-    #    [address], fail_silently=False,
-    #)
+    send_mail(
+        subject, message, from_address,
+        [address], fail_silently=False,
+    )
 
 
 def send_registration_email(address):
@@ -25,7 +25,7 @@ Thank you for registering to participate in the cor:ona study. If you did not al
 
 If you have any questions, contact us at talayeh.aledavood@aalto.fi.
     '''
-    #send_mail(
-    #    subject, message, from_address,
-    #    [address], fail_silently=False,
-    #)
+    send_mail(
+        subject, message, from_address,
+        [address], fail_silently=False,
+    )
