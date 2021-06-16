@@ -72,19 +72,19 @@ class User(AbstractUser):
     last_name = None
 
     # We do need an address to send the device to
-    address = models.CharField(
-                'address', max_length=50, blank=True,
+    home_address = models.CharField(
+                'home address', max_length=50, blank=True,
                 help_text=mark_safe(
-                  "<ul><li>Address for sending the Polar sport tracker. (Don't fill if you already have one.)</li></ul>"
+                  "<ul><li>Address for sending the Polar fitness tracker. It can be any address within Finland where you would like to receive the fitness tracker. (Don't fill if you already have one.)</li></ul>"
                 )
               )
 
     # Whether the user already has a Polar Ignite. If so, we don't need to send
     # one
     has_own_device = models.BooleanField(
-            "I have a Polar Ignite", default=False,
+            "I already have a Polar fitness tracker", default=False,
             help_text=mark_safe(
-              "<ul><li>Check this if you don't want us to send you a device.</li></ul>"
+              "<ul><li>Check this if you <b>don't</b> want us to send you a device.</li></ul>"
             )
         )
 

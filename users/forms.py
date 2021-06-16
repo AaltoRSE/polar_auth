@@ -56,14 +56,14 @@ class UserRegisterForm(UserCreationForm):
                 )
         return email
 
-    def clean_address(self):
-        address = self.cleaned_data['address']
+    def clean_home_address(self):
+        home_address = self.cleaned_data['home_address']
         has_device = self.cleaned_data['has_own_device']
-        if address == "" and not has_device:
+        if home_address == "" and not has_device:
             raise ValidationError(
                 "Please provide an address for mailing the fitness tracker."
             )
-        return address
+        return home_address
 
     def clean(self):
         ''' Create a random user_id '''
@@ -78,7 +78,7 @@ class UserRegisterForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['email', 'has_own_device', 'address', 'user_id']
+        fields = ['email', 'has_own_device', 'home_address', 'user_id']
         widgets = {'user_id': forms.HiddenInput()}
 
 
