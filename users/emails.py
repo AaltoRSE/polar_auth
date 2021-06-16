@@ -1,6 +1,6 @@
 from django.core.mail import send_mail
 
-from_address = "Dont Reply <do_not_reply@domain.com>"
+from_address = "Don not Reply <do_not_reply@domain.com>"
 
 
 def send_enrolment_email(address):
