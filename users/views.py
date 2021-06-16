@@ -72,6 +72,12 @@ class PrivacyView(SuccessMessageMixin, UpdateView):
     form_class = users.forms.PrivacyForm
     success_message = "Your reply has been registered succesfully."
 
+    def get_success_url(self):
+        user = self.request.user
+        if user.ready_to_authorize():
+            return '/'
+        return '/surveys/1'
+
     def get_object(self):
         return self.request.user
 
@@ -83,6 +89,12 @@ class ConsentView(SuccessMessageMixin, UpdateView):
     success_url = '/surveys/1'
     form_class = users.forms.ConsentForm
     success_message = "Your consent has been registered succesfully"
+
+    def get_success_url(self):
+        user = self.request.user
+        if user.ready_to_authorize():
+            return '/'
+        return '/surveys/1'
 
     def get_object(self):
         return self.request.user
