@@ -74,7 +74,8 @@ class PrivacyView(SuccessMessageMixin, UpdateView):
 
     def get_success_url(self):
         user = self.request.user
-        if user.consent:
+        print(user)
+        if not user.consent:
             return '/'
         return '/surveys/1'
 
@@ -92,7 +93,7 @@ class ConsentView(SuccessMessageMixin, UpdateView):
 
     def get_success_url(self):
         user = self.request.user
-        if user.privacy:
+        if not user.privacy:
             return '/'
         return '/surveys/1'
 
