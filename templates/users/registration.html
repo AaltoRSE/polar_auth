@@ -9,7 +9,7 @@
     <table class="form"> <tbody>
     {% for field in form.visible_fields %}
       <tr>
-      <th class="py-1">
+      <th class="py-1 px-2">
         {{ field.label }}{% if field.field.required %} * {% endif %}:
       </th>
       <td class="py-1">
