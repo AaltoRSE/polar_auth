@@ -96,8 +96,6 @@ class SubscriptionForm(forms.ModelForm):
 
     def save(self):
         user = super().save(commit=False)
-        if user.ready_to_authorize():
-            send_enrolment_email(user.email)
 
     class Meta:
         model = Subscriber
