@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 
 from users.models import User, Subscriber
+from users.emails import send_enrolment_email, send_registration_email
 
 
 class UserRegisterForm(UserCreationForm):
@@ -34,6 +35,10 @@ class UserRegisterForm(UserCreationForm):
         cleaned_data['user_id'] = int(uuid.uuid1().int>>96)
         return cleaned_data
 
+    def save(self):
+        user = super().save(commit=False)
+        send_registration_email(user.email)
+
     class Meta:
         model = User
         fields = ['email', 'has_own_device', 'address', 'user_id']
@@ -43,6 +48,11 @@ class UserRegisterForm(UserCreationForm):
 class PrivacyForm(forms.ModelForm):
     widget = forms.CheckboxInput(attrs={'class': 'form-check-input'})
     privacy = forms.BooleanField(required=True, widget=widget)
+
+    def save(self):
+        user = super().save(commit=False)
+        if user.ready_to_authorize():
+            send_enrolment_email(user.email)
 
     class Meta:
         model = User
@@ -83,6 +93,11 @@ class SubscriptionForm(forms.ModelForm):
                     "Please provide an Aalto email address."
                 )
         return email
+
+    def save(self):
+        user = super().save(commit=False)
+        if user.ready_to_authorize():
+            send_enrolment_email(user.email)
 
     class Meta:
         model = Subscriber
