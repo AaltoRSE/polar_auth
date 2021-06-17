@@ -1,0 +1,92 @@
+{% extends 'survey/base.html' %}
+{% load i18n %}
+{% load survey_extras %}
+{% load static %}
+
+{% block title %} {{survey.name}} {% endblock title %}
+
+{% block extrajs %}
+  {{response_form.media}}
+  {% if asset_context.flatpickr %}
+    <script type="text/javascript" src="{% static 'survey/js/flatpickr.min.js' %}"></script>
+  {% endif %}
+{% endblock %}
+
+{% block extracss %}
+  {% if asset_context.flatpickr %}
+    {{ block.super }}
+    <link href="{% static 'survey/css/flatpickr.min.css'%}" rel="stylesheet" type="text/css"/>
+  {% endif %}
+{% endblock %}
+
+
+
+{% block body %}
+	<h1> {{survey.name}} </h1>
+	<div>
+      {% if step and step != 0 %}
+		<form action="{% url 'survey-detail-step' id=survey.id step=step %}" method="post">
+	{% else %}
+		<form action="{% url 'survey-detail' id=survey.id %}" method="post">
+	{% endif %}
+	    {% csrf_token %}
+
+        {% for category in categories %}
+            <h3> {{category}} </h3>
+            <p> {{category.description}} </p>
+
+				<table class="table table-hover">
+				    <tbody>
+				{% for form in response_form %}
+					{% if form.field.widget.attrs.category == category.name or not form.field.widget.attrs.category %}
+				        <tr class="{% if form.errors%} danger {% endif %}">
+				            <td>
+
+											{{ form.label|safe }} <!-- Question -->
+
+											{% if form.field.required %}
+					                <span class="glyphicon glyphicon-asterisk" style="color:red"> </span>
+					            {% endif %}
+					            <span class="help-inline" style="color:red">
+					                <strong> {% for error in  form.errors %}{{ error }}{% endfor %} </strong>
+					            </span> <br>
+				                {% if form.field.widget.input_type == 'select' %}
+				                <select name="{{form.name}}"{% if form.field.widget.attrs.disabled %} disabled{% endif %}>
+				                {% endif %}
+					              {% for field in form %}
+						              {{ field }}
+												<br>
+				                {% endfor%}
+				                {% if form.field.widget.input_type == 'select' %}
+				                </select>
+				                {% endif %}
+				            </td>
+				        </tr>
+					{% endif %}
+				{% endfor %}
+				    </tbody>
+				</table>
+
+        {% empty %}
+            <h3> {% trans "Questions" %} </h3>
+            {% include "survey/question.html" %}
+        {% endfor %}
+
+        <br>
+		{% if survey.editable_answers or response_form.response is None %}
+	    {% if response_form.has_next_step %}
+				    <input
+  			          class="btn btn-default btn-lg"
+				        type="submit"
+				        value="{% trans "Next!" %}"
+        			>
+				{% else %}
+				    <input
+  			          class="btn btn-default btn-lg"
+				        type="submit"
+				        value="{% trans "I'm done!" %}"
+        			>
+				{% endif %}
+		{% endif %}
+	</form></div>
+{% endblock %}
