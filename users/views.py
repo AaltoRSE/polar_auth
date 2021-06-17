@@ -166,7 +166,7 @@ class GetAuthenticationView(RedirectView):
 @method_decorator(login_required, name='dispatch')
 class Remove_authorization(SuccessMessageMixin, UpdateView):
     model = User
-    template_name = 'users/Remove_authorization.html'
+    template_name = 'users/remove_authorization.html'
     success_url = '/'
     form_class = users.forms.RemoveAuthorizationForm
     success_message = "Authorization removed"

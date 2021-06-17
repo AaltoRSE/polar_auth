@@ -3,16 +3,24 @@
 <h4><a href="/">Back to the Main Page</a></h4>
 
 {% block content %}
-  <h2>Login</h2>
+  <h2>Remove authorization</h2>
+  <p>
+    You are about remove yourself from the study and rescind our authorization
+    to collect your data for the study.
+  </p>
+  <p>
+    Please remember that you need to <b>return your fitness tracker</b> if we
+    have sent you one.
+  </p>
   <form method="post">
     {% csrf_token %}
     <table class="form"> <tbody>
     {% for field in form.visible_fields %}
       <tr>
-      <th>
-        {{ field.label }}:
+      <th class="py-1 px-2">
+        {{ field.label }}{% if field.field.required %} * {% endif %}:
       </th>
-      <td>
+      <td class="py-1">
         {% if field.errors %}
           <p class="text-danger">{{ field.errors.as_text }}</p>
         {% endif %}
@@ -20,9 +28,14 @@
         </br>
         {{ field.help_text }}
       </td>
-      <tr>
+      </tr>
     {% endfor %}
+    <tr>
+      <th></th>
+      <td>
+        <button class="btn btn-primary" type="submit">Submit</button>
+      </td>
+    </tr>
     </tbody></table>
-    <button type="submit">Login</button>
   </form>
 {% endblock %}

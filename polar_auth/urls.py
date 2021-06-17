@@ -28,6 +28,7 @@ urlpatterns = [
     path('consent/', users.views.ConsentView.as_view(), name='consent'),
     path('consent-success/', users.views.ConsentSuccessView.as_view(), name='consent-success'),
     path('privacy/', users.views.PrivacyView.as_view(), name='privacy'),
+    path('remove/', users.views.Remove_authorization.as_view(), name='remove'),
     path('', users.views.AboutView.as_view(), name='main'),
     path('about/', users.views.AboutView.as_view(), name='about'),
     path('test/', users.views.TestView.as_view(), name='test'),
