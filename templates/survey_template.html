@@ -23,6 +23,7 @@
 
 {% block body %}
 	<h1> {{survey.name}} </h1>
+	<div class="survey-description"> {{survey.description|safe}} </div>
 	<div>
       {% if step and step != 0 %}
 		<form action="{% url 'survey-detail-step' id=survey.id step=step %}" method="post">
@@ -33,7 +34,9 @@
 
         {% for category in categories %}
             <h3> {{category}} </h3>
+						{% if category.description %}
             <p> {{category.description}} </p>
+						{% endif %}
 
 				<table class="table table-hover">
 				    <tbody>
