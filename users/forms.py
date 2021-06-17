@@ -153,12 +153,9 @@ class RemoveAuthorizationForm(forms.ModelForm):
         model = User
         fields = ['Remove_authorization']
 
-    def clean(self):
-        cleaned_data = super().clean()
-        cleaned_data['authorized'] = False
-        return cleaned_data
-
     def save(self, commit=True):
+        user = super().save(commit=False)
+        user.authorized = False
         user = super().save(commit)
         delete_token(user.user_id)
         return user
