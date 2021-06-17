@@ -5,6 +5,7 @@ import paramiko
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
+from django.utils.safestring import mark_safe
 
 from users.models import User, Subscriber
 from users.emails import send_enrolment_email, send_registration_email
@@ -46,6 +47,22 @@ def delete_token(subject_id):
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
+    widget = forms.CheckboxInput(attrs={'class': 'form-check-input'})
+    has_own_device = forms.BooleanField(required=False, widget=widget,
+            label=User._meta.get_field('has_own_device').verbose_name,
+            help_text=User._meta.get_field('has_own_device').help_text,
+        )
+    full_time = forms.BooleanField(required=True, widget=widget,
+            label='I am currently a full-time Aalto employee',
+            help_text=mark_safe('<ul><li>"visitor" status is not eligible</li></ul>'),
+        )
+    do_not_foresee_changing_employer = forms.BooleanField(
+            required=True, widget=widget,
+            label=mark_safe('I do not foresee to change my employer for at least the next 6 months (this is <i>not</i> a commitment)')
+        )
+    will_return_tracker = forms.BooleanField(required=True, widget=widget,
+            label='If I receive a fitness tracker, I will return it to Aalto University once the study is over or at any point if I decide to drop out of the study or if I change employer'
+        )
 
     def clean_email(self):
         ''' Validate Aalto email addresses. '''
