@@ -42,6 +42,7 @@ and give your consent to partipate.</li>
 
 {% endif %}
 
+{% if not user.authorized %}
 {%if user.ready_to_authorize %}
   <p>
     Thank you for taking part in the study. If you do not receive your Polar
@@ -73,6 +74,19 @@ and give your consent to partipate.</li>
   </li>
 </ul>
 {% endif %}
+{% endif %}
+
+{% if user.authorized %}
+  {% if not user.authorized %}
+  {%if user.ready_to_authorize %}
+    <p>
+      Thank you for taking part in the study. We are currently collecting data.
+    </p>
+    <p>
+      If you wish to
+    </p>
+{% endif %}
+
   </div>
 </div>
 

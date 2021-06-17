@@ -75,7 +75,7 @@ class User(AbstractUser):
     home_address = models.CharField(
                 'home address', max_length=50, blank=True,
                 help_text=mark_safe(
-                  "<ul><li>Address for sending the Polar fitness tracker. It can be any address within Finland where you would like to receive the fitness tracker. (Don't fill if you already have one.)</li></ul>"
+                  "<ul><li>Address for receiving the Polar fitness tracker. It can be any address within Finland where you would like to receive the fitness tracker. (Don't fill if you already have one.)</li></ul>"
                 )
               )
 
@@ -84,7 +84,7 @@ class User(AbstractUser):
     has_own_device = models.BooleanField(
             "I already have a Polar fitness tracker", default=False,
             help_text=mark_safe(
-              "<ul><li>Check this if you <b>don't</b> want us to send you a device.</li></ul>"
+              "<ul><li>Check this if you <b>don't</b> want us to send you a fitness tracker.</li></ul>"
             )
         )
 

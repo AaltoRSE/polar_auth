@@ -58,7 +58,7 @@ class UserRegisterForm(UserCreationForm):
         )
     do_not_foresee_changing_employer = forms.BooleanField(
             required=True, widget=widget,
-            label=mark_safe('I do not foresee to change my employer for at least the next 6 months (this is <i>not</i> a commitment)')
+            label=mark_safe('I do not expect to change my employer during the next 6 months (this is <i>not</i> a commitment)')
         )
     will_return_tracker = forms.BooleanField(required=True, widget=widget,
             label='If I receive a fitness tracker, I will return it to Aalto University once the study is over or at any point if I decide to drop out of the study or if I change employer'
