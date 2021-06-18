@@ -1,6 +1,6 @@
 from django.core.mail import send_mail
 
-from_address = "do_not_reply@domain.com"
+import polat_auth.settings.DEFAULT_FROM_EMAIL as from_address
 
 
 def send_enrolment_email(address):
