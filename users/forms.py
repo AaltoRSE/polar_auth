@@ -82,6 +82,15 @@ class UserRegisterForm(UserCreationForm):
             )
         return home_address
 
+    def clean_size(self):
+        home_address = self.cleaned_data['home_address']
+        size = self.cleaned_data['size']
+        if home_address != "" and size == "":
+            raise ValidationError(
+                "Please choose a size for the fitness tracker."
+            )
+        return size
+
     def clean(self):
         ''' Create a random user_id '''
         cleaned_data = super().clean()
@@ -95,7 +104,7 @@ class UserRegisterForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['email', 'has_own_device', 'home_address', 'user_id']
+        fields = ['email', 'has_own_device', 'home_address', 'size', 'user_id']
         widgets = {'user_id': forms.HiddenInput()}
 
 

@@ -88,6 +88,21 @@ class User(AbstractUser):
             )
         )
 
+    # Device address
+    size_choices = (
+        ('S', "S: 130–185 mm"),
+        ('M/L', "M/L: 155–210 mm"),
+    )
+
+    size = models.CharField(
+        'Fitness tracker size',
+        max_length=20, choices=size_choices,
+        help_text=mark_safe(
+          "<ul><li>Check this if you <b>don't</b> want us to send you a fitness tracker.</li></ul>"
+        ),
+        blank=True
+    )
+
     # Track the three steps that the user needs to complete before they have
     # signed up to the study.
     consent = models.BooleanField('Consented to study', default=False)
