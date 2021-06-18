@@ -18,7 +18,7 @@ If you have any questions, contact us at talayeh.aledavood@aalto.fi.
 
 
 def send_registration_email(address):
-    subject = "You have succesfully enrolled in the cor:ona study"
+    subject = "You have succesfully registered in the cor:ona study"
     message = '''Hi,
 
 Thank you for registering to participate in the cor:ona study. If you did not already, please go through the steps listed at https://corona.cs.aalto.fi to fully enroll in the study. If you need a fitness tracker, we will send one to you once you have completed these steps.
