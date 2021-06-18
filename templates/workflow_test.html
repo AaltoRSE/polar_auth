@@ -20,7 +20,7 @@
     <h4 class="card-title">Enrolment steps</h4>
 
 <p><b>To get started, please:</b></p>
-  <ul>
+  <ol>
   {%if not user.privacy %}
     <li> read the <a href="/privacy">privacy statement</a>
     and choose "I Agree" at the end.</li>
@@ -31,10 +31,13 @@
 and give your consent to partipate.</li>
   {% endif %}
 
-  {%if not user.first_survey_done %}
+  {%if not user.consent or not user.privacy %}
+    <li>
+      After completing the first two steps, fill in your first survey for the study. </li>
+  {% else %}
     <li> complete the <a href="/surveys/1">initial survey</a>.</li>
   {% endif %}
-  </ul>
+  </ol>
 
   <p>
     After completing these steps, we will send you a Polar Ignite fitness
