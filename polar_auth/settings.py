@@ -50,11 +50,6 @@ INSTALLED_APPS = [
     'users',
     'bootstrapform',
     'survey',
-    #'django.contrib.sites',
-    #'django_simple_bulk_emailer',
-    #'django_simple_file_handler',
-    #'adminsortable2',
-    #'ckeditor',
 ]
 
 MIDDLEWARE = [
