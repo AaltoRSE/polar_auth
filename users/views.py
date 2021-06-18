@@ -7,13 +7,17 @@ from django.views.generic.edit import CreateView
 from django.views.generic.base import RedirectView
 from django.views.generic.edit import UpdateView
 from django.views.generic import TemplateView
+from django.views.generic.edit import FormView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.urls import reverse_lazy
+from django.core.mail import send_mass_mail
 
 import users.forms
 from users.forms import communicate_token
-from users.models import User
+from users.models import User, Subscriber
 from polar_auth.settings import polar_key, polar_secret
+from polar_auth.settings import DEFAULT_FROM_EMAIL as from_address
 
 
 class ConsentSuccessView(TemplateView):
@@ -57,6 +61,30 @@ class AboutView(SuccessMessageMixin, CreateView):
         if self.request.user.is_authenticated:
             context['user'] = self.request.user
         return context
+
+
+class EmailSubscribersView(UserPassesTestMixin, FormView):
+    template_name = 'users/subscriber_email.html'
+    form_class = users.forms.EmailSubscribersForm
+    success_url = reverse_lazy('about')
+
+    def test_func(self):
+        return self.request.user.is_superuser
+
+    def send_email(self, data):
+        subject = data['subject']
+        message = data['message']
+
+        subscribers = Subscriber.objects.all()
+
+        emails = [(subject, message, from_address, [subscriber.email])
+                  for subscriber in subscribers
+                  ]
+        send_mass_mail(emails, fail_silently=False)
+
+    def form_valid(self, form):
+        self.send_email(form.cleaned_data)
+        return super().form_valid(form)
 
 
 class RegistrationView(SuccessMessageMixin, CreateView):

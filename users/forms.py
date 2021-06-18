@@ -185,3 +185,13 @@ class SubscriptionForm(forms.ModelForm):
     class Meta:
         model = Subscriber
         fields = ['email']
+
+
+class EmailSubscribersForm(forms.Form):
+    textAreaWidget = forms.Textarea(attrs={'cols': '40', 'rows': '20'})
+    subject = forms.CharField()
+    message = forms.CharField(widget=textAreaWidget)
+
+    class Meta:
+        fields = ['subject', 'message']
+

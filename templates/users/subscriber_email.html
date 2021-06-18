@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Email subscribers</h2>
+  <form method="post">
+    {% csrf_token %}
+    <table class="form"> <tbody>
+    {% for field in form.visible_fields %}
+      <tr>
+      <th class="py-1 px-2">
+        {{ field.label }}{% if field.field.required %} * {% endif %}:
+      </th>
+      <td class="py-1">
+        {% if field.errors %}
+          <p class="text-danger">{{ field.errors.as_text }}</p>
+        {% endif %}
+        {{ field }}
+      </td>
+      </tr>
+    {% endfor %}
+    <tr>
+      <th></th>
+      <td>
+        <input type="submit" name="Send" onclick="return confirm('You are about to send the message to many people. Are you sure?')" class="btn btn-primary"/>
+      </td>
+    </tr>
+    </tbody></table>
+  </form>
+{% endblock %}

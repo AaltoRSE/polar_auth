@@ -33,6 +33,7 @@ urlpatterns = [
     path('', users.views.AboutView.as_view(), name='main'),
     path('about/', users.views.AboutView.as_view(), name='about'),
     path('test/', users.views.TestView.as_view(), name='test'),
+    path('email_subscribers/', users.views.EmailSubscribersView.as_view(), name='email_subscribers'),
     path('token/', users.views.AddAuthTokenView.as_view(), name='auth_return'),
     path('authorize/', users.views.GetAuthenticationView.as_view(), name='auth'),
     path('faq/', users.views.FAQView.as_view(), name='faq'),
