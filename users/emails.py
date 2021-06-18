@@ -1,6 +1,6 @@
 from django.core.mail import send_mail
 
-import polar_auth.settings.DEFAULT_FROM_EMAIL as from_address
+from polar_auth.settings import DEFAULT_FROM_EMAIL as from_address
 
 
 def send_enrolment_email(address):
