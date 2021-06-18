@@ -98,7 +98,7 @@ class User(AbstractUser):
         'Fitness tracker size',
         max_length=20, choices=size_choices,
         help_text=mark_safe(
-          "<ul><li>Check this if you <b>don't</b> want us to send you a fitness tracker.</li></ul>"
+          "<ul><li>Size of the fitness tracker we send you.</li></ul>"
         ),
         blank=True
     )
