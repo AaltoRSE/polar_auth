@@ -171,4 +171,4 @@ EMAIL_HOST_USER= ''
 EMAIL_HOST_PASSWORD= ''
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = False
-DEFAULT_FROM_EMAIL = 'do_not_reply@domain.com'
+DEFAULT_FROM_EMAIL = 'do_not_reply@cs.corona.aalto.fi'
