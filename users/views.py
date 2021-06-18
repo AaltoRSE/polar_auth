@@ -11,6 +11,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 
 import users.forms
+from users.forms import communicate_token
 from users.models import User
 from polar_auth.settings import polar_key, polar_secret
 
