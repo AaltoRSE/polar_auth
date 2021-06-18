@@ -23,6 +23,10 @@
       <tr>
     {% endfor %}
     </tbody></table>
-    <button type="submit">Login</button>
+    <button type="submit" class="btn btn-primary">Login</button>
   </form>
+
+  <p class="my-4">
+    Forgot your password? <a href="{% url 'password_reset' %}">Reset your Password</a>
+  </p>
 {% endblock %}
