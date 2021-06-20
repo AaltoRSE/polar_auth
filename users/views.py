@@ -10,8 +10,10 @@ from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.urls import reverse_lazy
+from django.contrib.auth import authenticate, login
 from django.core.mail import send_mass_mail
+from django.urls import reverse_lazy
+from django.http import HttpResponseRedirect
 
 import users.forms
 from users.forms import communicate_token
@@ -89,9 +91,17 @@ class EmailSubscribersView(UserPassesTestMixin, FormView):
 
 class RegistrationView(SuccessMessageMixin, CreateView):
     template_name = 'users/registration.html'
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('main')
     form_class = users.forms.UserRegisterForm
     success_message = "Your profile was created successfully"
+
+    def form_valid(self, form):
+        form.save()
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password1']
+        user = authenticate(username=username, password=password)
+        login(self.request, user)
+        return HttpResponseRedirect(self.get_success_url)
 
 
 @method_decorator(login_required, name='dispatch')
