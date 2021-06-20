@@ -73,26 +73,22 @@ class UserRegisterForm(UserCreationForm):
                 )
         return email
 
-    def clean_home_address(self):
+    def clean(self):
         home_address = self.cleaned_data['home_address']
         has_device = self.cleaned_data['has_own_device']
         if home_address == "" and not has_device:
             raise ValidationError(
                 "Please provide an address for mailing the fitness tracker."
             )
-        return home_address
 
-    def clean_size(self):
         home_address = self.cleaned_data['home_address']
         size = self.cleaned_data['size']
         if home_address != "" and size == "":
             raise ValidationError(
                 "Please choose a size for the fitness tracker."
             )
-        return size
 
-    def clean(self):
-        ''' Create a random user_id '''
+        # Create a random user_id
         cleaned_data = super().clean()
         cleaned_data['user_id'] = int(uuid.uuid1().int>>96)
         return cleaned_data

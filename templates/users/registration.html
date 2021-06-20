@@ -6,6 +6,9 @@
   <h2>Registration</h2>
   <form method="post">
     {% csrf_token %}
+    {% for error in form.non_field_errors %}
+      <p class="text-danger">{{error}}</p>
+    {% endfor %}
     <table class="form"> <tbody>
     {% for field in form.visible_fields %}
       <tr>
