@@ -5,7 +5,7 @@
 
 
 {%if user.is_authenticated %}
-<div class="row">
+<div class="row" style="margin: 1em">
   <div class="col">
     You are logged in as {{ user.email }}.
     <a class="btn btn-primary float-end mx-1" href="/logout">Logout</a>
@@ -13,8 +13,8 @@
 </div>
 
 
-<div class="card my-5">
-  <div class="card-body">
+<div class="alert alert-primary">
+  <div class="alert-body">
 
 {%if not user.ready_to_authorize %}
     <h4 class="card-title">Enrolment steps</h4>
