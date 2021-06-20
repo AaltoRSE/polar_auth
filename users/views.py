@@ -14,6 +14,7 @@ import users.forms
 from users.forms import communicate_token
 from users.models import User
 from polar_auth.settings import polar_key, polar_secret
+from users import views
 
 
 class ConsentSuccessView(TemplateView):
@@ -61,9 +62,14 @@ class AboutView(SuccessMessageMixin, CreateView):
 
 class RegistrationView(SuccessMessageMixin, CreateView):
     template_name = 'users/registration.html'
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('test')
     form_class = users.forms.UserRegisterForm
     success_message = "Your profile was created successfully"
+    def form_valid(self, form):
+        ret = super().form_valid(form)
+        from django.contrib.auth import authenticate, login
+        login(self.request, self.object)
+        return ret
 
 
 @method_decorator(login_required, name='dispatch')
