@@ -97,11 +97,11 @@ class RegistrationView(SuccessMessageMixin, CreateView):
 
     def form_valid(self, form):
         form.save()
-        username = form.cleaned_data['username']
+        email = form.cleaned_data['email']
         password = form.cleaned_data['password1']
-        user = authenticate(username=username, password=password)
+        user = authenticate(username=email, password=password)
         login(self.request, user)
-        return HttpResponseRedirect(self.get_success_url)
+        return HttpResponseRedirect(reverse_lazy('main'))
 
 
 @method_decorator(login_required, name='dispatch')
