@@ -3,7 +3,7 @@ from django.contrib.admin import ModelAdmin
 from django.contrib.auth.admin import UserAdmin
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from django.core.mail import send_mass_mail
+from django.core.mail import send_mail
 
 from users.models import User
 from .models import Subscriber
@@ -15,11 +15,14 @@ from polar_auth.settings import DEFAULT_FROM_EMAIL as from_address
 def admin_email(adminobject, request, queryset):
     if 'apply' in request.POST:
         subject = request.POST['subject']
-        message = request.POST['content']
-        emails = [(subject, message, from_address, [object.email])
-                  for object in queryset
-                  ]
-        send_mass_mail(emails, fail_silently=False)
+        message = request.POST['message']
+        html_message = request.POST['html_message']
+        for object in queryset:
+            send_mail(
+                subject, message, from_address,
+                [object.email],
+                html_message=html_message, fail_silently=False,
+            )
 
         adminobject.message_user(request, f"Sent email to {queryset.count()} addresses.")
         return HttpResponseRedirect(request.get_full_path())

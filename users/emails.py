@@ -18,14 +18,46 @@ If you have any questions, contact us at talayeh.aledavood@aalto.fi.
 
 
 def send_registration_email(address):
-    subject = "You have succesfully registered in the cor:ona study"
+    subject = "cor:ona study: You have registered successfully"
     message = '''Hi,
 
-Thank you for registering to participate in the cor:ona study. If you did not already, please go through the steps listed at https://corona.cs.aalto.fi to fully enroll in the study. If you need a fitness tracker, we will send one to you once you have completed these steps.
+You are now enrolled to the cor:ona study! Soon, a fitness tracker will be mailed to you to the address you provided (if you have requested to receive one). If you do not receive it within 10 days, please contact us (talayeh.aledavood@aalto.fi).
 
-If you have any questions, contact us at talayeh.aledavood@aalto.fi.
+Once you have the fitness tracker:
+
+Recharge the fitness tracker and go to the study website and login. Follow the steps to create a Polar account and link it the cor:ona study (instructions will be provided).  At this stage most of what you will do is the same as what you have to do once you purchase a fitness tracker yourself. The extra steps related to this study are minimal.
+
+After you link your fitness tracker to the study:
+
+You will receive one short survey from us each month by email. These surveys will be short so they can be done in less than 5 minutes. Please try to answer them as soon as possible when you get the link. This would be very helpful for the research.
+
+Thank you once again for your participation! If you have questions please check our Frequently Asked Questions or contact us: talayeh.aledavood@aalto.fi
+
+Have a great summer,
+The cor:ona study team
     '''
+
+    html_message ='''Hi,
+
+You are now enrolled to the cor:ona study! Soon, a fitness tracker will be mailed to you to the address you provided (if you have requested to receive one). If you do not receive it within 10 days, please contact us (talayeh.aledavood@aalto.fi).
+
+<b>Once you have the fitness tracker:</b>
+
+Recharge the fitness tracker and go to the study website and login. Follow the steps to create a Polar account and link it the cor:ona study (instructions will be provided).  At this stage most of what you will do is the same as what you have to do once you purchase a fitness tracker yourself. The extra steps related to this study are minimal.
+
+<b>After you link your fitness tracker to the study:</b>
+
+You will receive one short survey from us each month by email. These surveys will be short so they can be done in less than 5 minutes. Please try to answer them as soon as possible when you get the link. This would be very helpful for the research.
+
+Thank you once again for your participation! If you have questions please check our Frequently Asked Questions or contact us: talayeh.aledavood@aalto.fi
+
+Have a great summer,
+The cor:ona study team
+    '''
+
     send_mail(
         subject, message, from_address,
-        [address], fail_silently=False,
+        [address],
+        html_message = html_message,
+        fail_silently=False,
     )
