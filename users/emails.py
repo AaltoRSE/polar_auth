@@ -53,3 +53,48 @@ The cor:ona study team
         fail_silently=False,
     )
 
+
+def send_enrolment_complete_email(address):
+    subject = "cor:ona study- Successfully enrolled!"
+    message = '''Hi,
+
+Congratulations! You are now fully enrolled in the cor:ona study!
+
+Future steps:
+
+You will receive one short questionnaire from us each month by email. These surveys will be short so they can be done in less than 5 minutes. Please try to answer them as soon as possible when you get the link. This would be very helpful for the research.
+
+Thank you once again for your participation! If you have questions please check our Frequently Asked Questions (https://corona.cs.aalto.fi/faq/) or contact us: talayeh.aledavood@aalto.fi
+
+The cor:ona study team
+'''
+    html_message = '''<p>Hi,</p>
+
+<p>
+Congratulations! You are now fully enrolled in the cor:ona study!
+</p>
+
+<p>
+<b>Future steps:</b>
+</p>
+
+<p>
+You will receive one short questionnaire from us each month by email. These surveys will be short so they can be done in less than 5 minutes. Please try to answer them as soon as possible when you get the link. This would be very helpful for the research.
+</p>
+
+<p>
+Thank you once again for your participation! If you have questions please check our
+<a href="https://corona.cs.aalto.fi/faq/">Frequently Asked Questions</a> or contact us: <a href="mailto:talayeh.aledavood@aalto.fi">talayeh.aledavood@aalto.fi</a>.
+</p>
+
+<p>
+The cor:ona study team
+</p>
+'''
+
+    send_mail(
+        subject, message, from_address, [address],
+        html_message=html_message,
+        fail_silently=False,
+    )
+
