@@ -17,25 +17,25 @@
   <div class="alert-body">
 
 {%if not user.ready_to_authorize %}
-    <h4 class="card-title">Enrolment steps</h4>
 
-<p><b>To get started, please:</b></p>
+    <h4 class="card-title">Next:</h4>
+
+<p><b>Complete the enrolment steps below:</b></p>
   <ol>
   {%if not user.privacy %}
-    <li> read the <a href="/privacy">privacy statement</a>
+    <li> <a href="/privacy"><b>Click here</b></a> to read the privacy statement
     and choose "I Agree" at the end.</li>
   {% endif %} {# user.privacy #}
 
   {%if not user.consent %}
-    <li> read the <a href="/consent">consent form</a>
-and give your consent to partipate.</li>
+    <li> <a href="/consent"><b>Click here</b</a> to give your consent to partipate in the study.</li>
   {% endif %} {# user.consent #}
 
   {%if not user.consent or not user.privacy %}
     <li>
-      After completing the first two steps, fill in your first survey for the study. </li>
+      After completing the first two steps, fill in your first survey of the study. </li>
   {% else %}
-    <li> complete the <a href="/surveys/1">initial survey</a>.</li>
+    <li> <a href="/surveys/1"><b>Click here</b</a> to complete the initial survey.</li>
   {% endif %} {# end not user.consent or not user.privacy #}
   </ol>
 
@@ -77,7 +77,7 @@ and give your consent to partipate.</li>
     Create a Polar Flow account using the app or the web interface.
   </li>
   <li>
-    <a href="/authorize">Click here</a> to authorize the study to
+    <a href="/authorize"><b>Click here</b></a> to authorize the study to
     access the information required for the study.
   </li>
 </ol>
