@@ -13,8 +13,6 @@ from polar_auth.settings import DEFAULT_FROM_EMAIL as from_address
 
 @admin.action(description='Send email')
 def admin_email(adminobject, request, queryset):
-    print(request)
-    print(request.POST)
     if 'apply' in request.POST:
         subject = request.POST['subject']
         message = request.POST['content']
@@ -28,9 +26,6 @@ def admin_email(adminobject, request, queryset):
 
     context = {'queryset': queryset, 'count': queryset.count()}
     return render(request, 'admin/send_email.html', context=context)
-
-    for object in queryset:
-        print(object.email)
 
 
 # Register your models here.
