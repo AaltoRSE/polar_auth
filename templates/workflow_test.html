@@ -28,14 +28,14 @@
   {% endif %} {# user.privacy #}
 
   {%if not user.consent %}
-    <li> <a href="/consent"><b>Click here</b</a> to give your consent to partipate in the study.</li>
+    <li> <a href="/consent"><b>Click here</b></a> to give your consent to partipate in the study.</li>
   {% endif %} {# user.consent #}
 
   {%if not user.consent or not user.privacy %}
     <li>
       After completing the first two steps, fill in your first survey of the study. </li>
   {% else %}
-    <li> <a href="/surveys/1"><b>Click here</b</a> to complete the initial survey.</li>
+    <li> <a href="/surveys/1"><b>Click here</b></a> to complete the initial survey.</li>
   {% endif %} {# end not user.consent or not user.privacy #}
   </ol>
 
