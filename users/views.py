@@ -68,7 +68,7 @@ class AboutView(SuccessMessageMixin, CreateView):
 class EmailSubscribersView(UserPassesTestMixin, FormView):
     template_name = 'users/subscriber_email.html'
     form_class = users.forms.EmailSubscribersForm
-    success_url = reverse_lazy('about')
+    success_url = reverse_lazy('home')
 
     def test_func(self):
         return self.request.user.is_superuser
@@ -91,7 +91,6 @@ class EmailSubscribersView(UserPassesTestMixin, FormView):
 
 class RegistrationView(SuccessMessageMixin, CreateView):
     template_name = 'users/registration.html'
-    success_url = reverse_lazy('main')
     form_class = users.forms.UserRegisterForm
     success_message = "Your profile was created successfully"
 
@@ -101,7 +100,7 @@ class RegistrationView(SuccessMessageMixin, CreateView):
         password = form.cleaned_data['password1']
         user = authenticate(username=email, password=password)
         login(self.request, user)
-        return HttpResponseRedirect(reverse_lazy('main'))
+        return HttpResponseRedirect(reverse_lazy('privacy'))
 
 
 @method_decorator(login_required, name='dispatch')
