@@ -33,9 +33,9 @@ Thank you for participating in the cor:ona study! We have received your answers 
 Recharge the fitness tracker and go to the study website and log in. Follow the steps to create a Polar account and link it to the cor:ona study (instructions will be provided).  At this stage most of what you will do is the same as what you have to do once you purchase a fitness tracker yourself. The extra steps related to this study are minimal.
 </p>
 
-<p>
+<p><b>
 Your enrollment is not complete until you link your fitness tracker to the cor:ona study.
-</p>
+</b></p>
 
 <p>
 Thank you once again for your participation! If you have questions please check our
