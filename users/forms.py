@@ -8,7 +8,7 @@ from django.core.exceptions import ValidationError
 from django.utils.safestring import mark_safe
 
 from users.models import User, Subscriber
-from users.emails import send_enrolment_email, send_
+from users.emails import send_enrolment_email
 from polar_auth.settings import data_server, data_folder, data_server_key
 from polar_auth.settings import rsa_key_file, ssh_username
 
