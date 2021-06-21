@@ -24,6 +24,9 @@ def admin_email(adminobject, request, queryset):
                 html_message=html_message, fail_silently=False,
             )
 
+            object.has_received_email = True
+            object.save()
+
         adminobject.message_user(request, f"Sent email to {queryset.count()} addresses.")
         return HttpResponseRedirect(request.get_full_path())
 
@@ -60,7 +63,16 @@ class CustomUserAdmin(UserAdmin):
 
 class SubscriberAdmin(ModelAdmin):
     model = Subscriber
+    list_display = ('email', 'has_received_email')
+    list_filter = ('email', 'has_received_email')
     actions = [admin_email]
+
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'has_received_email')}
+         ),
+    )
 
     def get_actions(self, request):
         actions = super().get_actions(request)

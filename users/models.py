@@ -120,6 +120,9 @@ class User(AbstractUser):
     # Before we have access to the polar_id, we need a user ID for the survey
     user_id = models.CharField('ID', max_length=32, blank=True)
 
+
+    has_received_email = models.BooleanField('Has received email', default=False)
+
     # Set the user manager
     objects = UserManager()
 
@@ -135,6 +138,9 @@ class Subscriber(models.Model):
     ''' This model only contains an email. Added emails are
     expressions of interest, not actual registrations.'''
     email = models.EmailField(unique=True, help_text="Email (aalto.fi only)")
+
+    user_id = models.CharField('ID', max_length=32, blank=True)
+    has_received_email = models.BooleanField('Has received email', default=False)
 
     def __str__(self):
         return self.email
