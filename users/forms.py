@@ -13,11 +13,16 @@ from polar_auth.settings import data_server, data_folder, data_server_key
 from polar_auth.settings import rsa_key_file, ssh_username
 
 # Set up an SSH client and add the data server key
-server_key = paramiko.RSAKey(data=base64.decodebytes(data_server_key))
-ssh_client = paramiko.SSHClient()
-ssh_client.get_host_keys().add(data_server, 'ssh-rsa', server_key)
-rsa_key = paramiko.RSAKey.from_private_key_file(rsa_key_file)
-
+try:
+    server_key = paramiko.RSAKey(data=base64.decodebytes(data_server_key))
+    ssh_client = paramiko.SSHClient()
+    ssh_client.get_host_keys().add(data_server, 'ssh-rsa', server_key)
+    rsa_key = paramiko.RSAKey.from_private_key_file(rsa_key_file)
+except:
+    from django.conf import settings
+    if not settings.DEBUG:
+        raise
+    print("Can not load SSH keys.  Ignoring because this is debug mode.")
 
 # Communicate the access token to the data server
 def communicate_token(polar_id, access_token, subject_id):

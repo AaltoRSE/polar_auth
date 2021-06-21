@@ -12,7 +12,13 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 import os
 from pathlib import Path
-from .secret import *
+try:
+    from .secret import *
+except:
+    print("Con not import secrets")
+    SECRET_KEY = "11a085507ede3417a546e9a46e770e3e0344255d1fb6feea382154b8f63671e8"
+    polar_key = "None"
+    polar_secret = "None"
 
 # The path to the data server
 data_server = "127.0.0.1"
