@@ -48,10 +48,22 @@ class CustomUserAdmin(UserAdmin):
     ordering = ('email',)
     actions = [admin_email]
 
+    def get_actions(self, request):
+        actions = super().get_actions(request)
+        if 'delete_selected' in actions:
+            del actions['delete_selected']
+        return actions
+
 
 class SubscriberAdmin(ModelAdmin):
     model = Subscriber
     actions = [admin_email]
+
+    def get_actions(self, request):
+        actions = super().get_actions(request)
+        if 'delete_selected' in actions:
+            del actions['delete_selected']
+        return actions
 
 
 admin.site.register(User, CustomUserAdmin)
