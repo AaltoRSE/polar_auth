@@ -90,8 +90,8 @@ class User(AbstractUser):
 
     # Device address
     size_choices = (
-        ('S', "S: 130–185 mm"),
-        ('M/L', "M/L: 155–210 mm"),
+        ('S', "S: wrist circumference 130–185 mm"),
+        ('M/L', "M/L: wrist circumference 155–210 mm"),
     )
 
     size = models.CharField(
