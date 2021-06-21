@@ -55,7 +55,7 @@ The cor:ona study team
 
 
 def send_enrolment_complete_email(address):
-    subject = "cor:ona study- Successfully enrolled!"
+    subject = "cor:ona study- Enrolment succesfull, next steps"
     message = '''Hi,
 
 Congratulations! You are now fully enrolled in the cor:ona study!
