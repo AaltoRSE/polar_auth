@@ -18,6 +18,7 @@ from django.http import HttpResponseRedirect
 import users.forms
 from users.forms import communicate_token
 from users.models import User, Subscriber
+from users.emails import send_enrolment_complete_email
 from polar_auth.settings import polar_key, polar_secret
 from polar_auth.settings import DEFAULT_FROM_EMAIL as from_address
 
@@ -178,6 +179,9 @@ class AddAuthTokenView(RedirectView):
         # Send the user information to the data server
         communicate_token(user.polar_id, access_token, user.user_id)
         user.save()
+
+        # Email the user
+        send_enrolment_complete_email(user.email)
 
         headers = {
             'Content-Type': 'application/json',
