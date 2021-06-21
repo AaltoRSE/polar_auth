@@ -73,10 +73,10 @@ class UserRegisterForm(UserCreationForm):
     def clean_email(self):
         ''' Validate Aalto email addresses. '''
         email = self.cleaned_data['email']
-        #if not email.endswith("@aalto.fi"):
-        #    raise ValidationError(
-        #            "Please provide an Aalto email address."
-        #        )
+        if not email.endswith("@aalto.fi"):
+            raise ValidationError(
+                    "Please provide an Aalto email address."
+                )
         return email
 
     def clean(self):
