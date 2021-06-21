@@ -8,7 +8,7 @@ from django.core.exceptions import ValidationError
 from django.utils.safestring import mark_safe
 
 from users.models import User, Subscriber
-from users.emails import send_enrolment_email, send_registration_email
+from users.emails import send_enrolment_email, send_
 from polar_auth.settings import data_server, data_folder, data_server_key
 from polar_auth.settings import rsa_key_file, ssh_username
 
@@ -98,11 +98,6 @@ class UserRegisterForm(UserCreationForm):
         cleaned_data = super().clean()
         cleaned_data['user_id'] = int(uuid.uuid1().int>>96)
         return cleaned_data
-
-    def save(self, commit=True):
-        user = super().save(commit)
-        send_registration_email(user.email)
-        return user
 
     class Meta:
         model = User
