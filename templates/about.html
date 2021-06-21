@@ -3,6 +3,116 @@
 
 {% block content %}
 
+
+{%if user.is_authenticated %}
+<div class="row" style="margin: 1em">
+  <div class="col">
+    You are logged in as {{ user.email }}.
+    <a class="btn btn-primary float-end mx-1" href="/logout">Logout</a>
+  </div>
+</div>
+
+
+<div class="alert alert-primary">
+  <div class="alert-body">
+
+{%if not user.ready_to_authorize %}
+
+    <h4 class="card-title">Next:</h4>
+
+<p><b>Complete the enrolment steps below:</b></p>
+  <ol>
+  {%if not user.privacy %}
+    <li> <a href="/privacy"><b>Click here</b></a> to read the privacy statement
+    and choose "I Agree" at the end.</li>
+  {% endif %} {# user.privacy #}
+
+  {%if not user.consent %}
+    <li> <a href="/consent"><b>Click here</b></a> to give your consent to partipate in the study.</li>
+  {% endif %} {# user.consent #}
+
+  {%if not user.consent or not user.privacy %}
+    <li>
+      After completing the first two steps, fill in your first survey of the study. </li>
+  {% else %}
+    <li> <a href="/surveys/1"><b>Click here</b></a> to complete the initial survey.</li>
+  {% endif %} {# end not user.consent or not user.privacy #}
+  </ol>
+
+  <p>
+    After completing these steps, we will send you a Polar Ignite fitness
+    tracker (if you don't already have one).
+  </p>
+
+{% endif %} {# not user.ready_to_authorize #}
+
+{% if not user.authorized %}
+{% if user.ready_to_authorize %}
+  <p>
+    Thank you for taking part in the study. If you do not receive your Polar
+    Ignite fitness tracker within a couple of weeks, please contact us to check
+    if there are any problems.
+  </p>
+
+
+<b>Once you have the fitness tracker, please:</b>
+
+<ol>
+  <li>
+    See the <a href="https://support.polar.com/e_manuals/ignite/polar-ignite-user-manual-english/content/setting-up-your-watch.htm">Polar Ignite user manual</a>
+    for information about setting up and using the fitness tracker.
+  </li>
+  <li>
+     Install the Polar Flow app. The app
+     is available on
+     <a href="https://play.google.com/store/apps/details?id=fi.polar.polarflow">Android</a>
+     and on
+     <a href="https://apps.apple.com/us/app/polar-flow/id717172678">iOS</a>,
+     as well as on
+     <a href="https://flow.polar.com/start">Windows and macOS</a>.
+     You can view your data on the app itself or using the
+     <a href="https://flow.polar.com">web interface</a>.
+  </li>
+  <li>
+    Create a Polar Flow account using the app or the web interface.
+  </li>
+  <li>
+    <a href="/authorize"><b>Click here</b></a> to authorize the study to
+    access the information required for the study.
+  </li>
+</ol>
+{% endif %} {# end not user.authorized#}
+{% endif %}
+
+{% if user.authorized %}
+    <p>
+      Thank you for taking part in the study. We are currently collecting data.
+    </p>
+    <p>
+      You can view your data in the Polar Flow app itself or using the
+      <a href="https://flow.polar.com">web interface</a>.
+    </p>
+    <p>
+      If you wish to drop out of the study, <a href="/remove">click here</a>.
+    </p>
+{% endif %} {# end user.authorized #}
+
+  </div>
+</div>
+
+<h3> About the Study </h3>
+{% endif %}
+
+{%if not user.is_authenticated %}
+<div class="row">
+  <div class="col">
+    <a class="btn btn-primary float-end mx-1" href="/registration">Register</a>
+    <a class="btn btn-primary float-end mx-1" href="/login">Login</a>
+  </div>
+</div>
+{% endif %}
+
+
 <p>
 How has the pandemic changed our daily life?  What does "normal" even mean now? Take part in a research study on this topic and learn more about yourself and your routines in the process.
 </p>
@@ -14,7 +124,7 @@ Covid-19 has given us many challenges, but also provides an unprecedented opport
 </p>
 
 <p>
-By taking part, you will be loaned a Polar fitness tracker (or may use one you already own), wear it for six months to one year, and answer survey questions once or twice a month. You will need to create your own Polar account for data.
+By taking part, you will be loaned a Polar fitness tracker (or may use one you already own), wear it for six months to one year, and answer a short monthly survey. You also need to fill out a baseline questionnaire and one at the end of the study. You will need to create your own Polar account for data.
 </p>
 
 <p> <b>
@@ -23,40 +133,6 @@ You also should be a full-time Aalto employee who doesn't foresee changing jobs 
 
 <p>
 This study has been approved by the Aalto University Research Ethics Committee.
-</p>
-
-<p>
-Interested to volunteer as a participant or to find out more? Enter your email address and we will send you more information once the enrollment period starts (approximately mid June). By entering your email you are not committed to participate in the study.
-</p>
-
-<p>
-  This study is supported by <a href="https://magics.fi">MAGICS infrastructure</a> and the <a href="https://scicomp.aalto.fi/rse/">Aalto Research Software Engineers team</a>.
-</p>
-
-<form method="post">
-  {% csrf_token %}
-  <table class="form"> <tbody>
-    {% if form.email.errors %}
-    <tr>
-      <th></th>
-      <td><p class="text-danger">{{ form.email.errors.as_text }}</p></td>
-    </tr>
-    {% endif %}
-    <tr class="my-3">
-    <th>
-      <label for="id_email">Email (aalto.fi only):</label>
-    </th>
-    <td>
-      {{ form.email }}
-    </td>
-    <tr>
-    </tbody></table>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-</br>
-
-<p>
-(If you would like us to remove your email, please contact us at <a href = "mailto: jarno.rantaharju@aalto.fi">jarno.rantaharju@aalto.fi</a>.)
 </p>
 
 <h4> <a href="/faq"> Frequently Asked Questions </a> </h4>

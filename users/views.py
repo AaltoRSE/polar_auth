@@ -43,8 +43,8 @@ class FAQView(TemplateView):
         return context
 
 
-class TestView(TemplateView):
-    template_name = 'workflow_test.html'
+class AboutView(TemplateView):
+    template_name = 'about.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -53,8 +53,8 @@ class TestView(TemplateView):
         return context
 
 
-class AboutView(SuccessMessageMixin, CreateView):
-    template_name = 'about.html'
+class AboutInitialView(SuccessMessageMixin, CreateView):
+    template_name = 'about_initial.html'
     success_url = reverse_lazy('about')
     form_class = users.forms.SubscriptionForm
     success_message = "Thank you for subscribing to updates."

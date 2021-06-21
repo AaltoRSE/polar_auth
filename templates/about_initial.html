@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<p>
+How has the pandemic changed our daily life?  What does "normal" even mean now? Take part in a research study on this topic and learn more about yourself and your routines in the process.
+</p>
+
+<img src="{% static 'polar_ignite.jpeg' %}" class="w-25 img_float_right mx-4 my-1" alt="polar ignite device">
+
+<p>
+Covid-19 has given us many challenges, but also provides an unprecedented opportunity for learning! We want to use this opportunity in a research setting to better understand how we adapt to the post-pandemic life and how long it takes for us to build stable routines again.
+</p>
+
+<p>
+By taking part, you will be loaned a Polar fitness tracker (or may use one you already own), wear it for six months to one year, and answer survey questions once or twice a month. You will need to create your own Polar account for data.
+</p>
+
+<p> <b>
+You also should be a full-time Aalto employee who doesn't foresee changing jobs in the next year. Taking part in this study (or not) will not affect your employment in any way.
+</b> </p>
+
+<p>
+This study has been approved by the Aalto University Research Ethics Committee.
+</p>
+
+<p>
+Interested to volunteer as a participant or to find out more? Enter your email address and we will send you more information once the enrollment period starts (approximately mid June). By entering your email you are not committed to participate in the study.
+</p>
+
+<p>
+  This study is supported by <a href="https://magics.fi">MAGICS infrastructure</a> and the <a href="https://scicomp.aalto.fi/rse/">Aalto Research Software Engineers team</a>.
+</p>
+
+<form method="post">
+  {% csrf_token %}
+  <table class="form"> <tbody>
+    {% if form.email.errors %}
+    <tr>
+      <th></th>
+      <td><p class="text-danger">{{ form.email.errors.as_text }}</p></td>
+    </tr>
+    {% endif %}
+    <tr class="my-3">
+    <th>
+      <label for="id_email">Email (aalto.fi only):</label>
+    </th>
+    <td>
+      {{ form.email }}
+    </td>
+    <tr>
+    </tbody></table>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</br>
+
+<p>
+(If you would like us to remove your email, please contact us at <a href = "mailto: jarno.rantaharju@aalto.fi">jarno.rantaharju@aalto.fi</a>.)
+</p>
+
+<h4> <a href="/faq"> Frequently Asked Questions </a> </h4>
+
+{% endblock %}
