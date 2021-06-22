@@ -50,12 +50,16 @@ class CustomUserAdmin(UserAdmin):
 
     def get_received_data(self, obj):
         ids = get_ids_with_data()
+        if obj.received_data:
+            return True
         if int(obj.user_id) in ids:
+            obj.received_data = True
+            obj.save()
             return True
         return False
 
     get_received_data.short_description = 'Received data'
-    get_received_data.order_field = 'received_data'
+    get_received_data.admin_order_field = 'received_data'
     get_received_data.boolean = True
 
     def get_actions(self, request):
