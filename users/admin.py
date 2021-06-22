@@ -40,7 +40,7 @@ class CustomUserAdmin(UserAdmin):
     list_display = ('email', 'consent', 'privacy', 'first_survey_done', 'authorized', 'device_sent')
     list_filter = ('email', 'consent', 'privacy', 'first_survey_done', 'authorized', 'device_sent')
     fieldsets = (
-        (None, {'fields': ('email', 'home_address', 'size', 'consent', 'privacy', 'first_survey_done', 'password', 'user_id', 'authorized', 'device_sent')}),
+        (None, {'fields': ('email', 'home_address', 'size', 'consent', 'privacy', 'first_survey_done', 'password', 'authorized', 'device_sent')}),
         ('Permissions', {'fields': ('is_superuser',)}),
     )
     add_fieldsets = (
