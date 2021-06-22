@@ -120,8 +120,12 @@ class User(AbstractUser):
     # Before we have access to the polar_id, we need a user ID for the survey
     user_id = models.CharField('ID', max_length=32, blank=True)
 
-
+    # This becomes True when an email is sent to this user in the admin
+    # interface
     has_received_email = models.BooleanField('Has received email', default=False)
+
+    # Checked manually by an admin when the device has been posted or delivered
+    device_sent = models.BooleanField('Fitness tracker sent', default=False)
 
     # Set the user manager
     objects = UserManager()
