@@ -50,8 +50,6 @@ class CustomUserAdmin(UserAdmin):
 
     def get_received_data(self, obj):
         ids = get_ids_with_data()
-        print(ids)
-        print(obj.user_id)
         if int(obj.user_id) in ids:
             return True
         return False
