@@ -5,8 +5,8 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.core.mail import send_mail
 
-from users.models import User
-from .models import Subscriber
+from users.models import User, Subscriber
+from users.data_server import get_ids_with_data
 
 from polar_auth.settings import DEFAULT_FROM_EMAIL as from_address
 
@@ -34,19 +34,31 @@ def admin_email(adminobject, request, queryset):
     return render(request, 'admin/send_email.html', context=context)
 
 
-# Register your models here.
 class CustomUserAdmin(UserAdmin):
     model = User
-    list_display = ('email', 'consent', 'privacy', 'first_survey_done', 'authorized', 'device_sent', 'received_data')
-    list_filter = ('email', 'consent', 'privacy', 'first_survey_done', 'authorized', 'device_sent', 'received_data')
+    list_display = ('email', 'consent', 'privacy', 'first_survey_done', 'authorized', 'device_sent', 'get_received_data')
+    list_filter = ('email', 'consent', 'privacy', 'first_survey_done', 'authorized', 'device_sent')
     fieldsets = (
-        (None, {'fields': ('email', 'home_address', 'size', 'consent', 'privacy', 'first_survey_done', 'password', 'authorized', 'device_sent', 'received_data')}),
+        (None, {'fields': ('email', 'home_address', 'size', 'consent', 'privacy', 'first_survey_done', 'password', 'authorized', 'device_sent', 'get_received_data')}),
         ('Permissions', {'fields': ('is_superuser',)}),
     )
+    readonly_fields = ['get_received_data']
 
     search_fields = ('email',)
     ordering = ('email',)
     actions = [admin_email]
+
+    def get_received_data(self, obj):
+        ids = get_ids_with_data()
+        print(ids)
+        print(obj.user_id)
+        if int(obj.user_id) in ids:
+            return True
+        return False
+
+    get_received_data.short_description = 'Received data'
+    get_received_data.order_field = 'received_data'
+    get_received_data.boolean = True
 
     def get_actions(self, request):
         actions = super().get_actions(request)

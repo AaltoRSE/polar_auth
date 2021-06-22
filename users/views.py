@@ -16,7 +16,7 @@ from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 
 import users.forms
-from users.forms import communicate_token
+from users.data_server import communicate_token
 from users.models import User, Subscriber
 from users.emails import send_enrolment_complete_email
 from polar_auth.settings import polar_key, polar_secret
