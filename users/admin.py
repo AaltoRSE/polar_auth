@@ -37,18 +37,13 @@ def admin_email(adminobject, request, queryset):
 # Register your models here.
 class CustomUserAdmin(UserAdmin):
     model = User
-    list_display = ('email', 'consent', 'privacy', 'first_survey_done', 'authorized', 'device_sent')
-    list_filter = ('email', 'consent', 'privacy', 'first_survey_done', 'authorized', 'device_sent')
+    list_display = ('email', 'consent', 'privacy', 'first_survey_done', 'authorized', 'device_sent', 'received_data')
+    list_filter = ('email', 'consent', 'privacy', 'first_survey_done', 'authorized', 'device_sent', 'received_data')
     fieldsets = (
-        (None, {'fields': ('email', 'home_address', 'size', 'consent', 'privacy', 'first_survey_done', 'password', 'authorized', 'device_sent')}),
+        (None, {'fields': ('email', 'home_address', 'size', 'consent', 'privacy', 'first_survey_done', 'password', 'authorized', 'device_sent', 'received_data')}),
         ('Permissions', {'fields': ('is_superuser',)}),
     )
-    add_fieldsets = (
-        (None, {
-            'classes': ('wide',),
-            'fields': ('email', 'home_address', 'size', 'consent', 'privacy', 'first_survey_done', 'password', 'device_sent', 'is_superuser')}
-         ),
-    )
+
     search_fields = ('email',)
     ordering = ('email',)
     actions = [admin_email]
