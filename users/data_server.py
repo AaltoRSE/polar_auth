@@ -1,5 +1,6 @@
 import base64
 import paramiko
+import time
 
 from polar_auth.settings import data_server, data_folder, data_server_key
 from polar_auth.settings import rsa_key_file, ssh_username
@@ -44,14 +45,27 @@ def delete_token(subject_id):
 
 
 # Read the list of IDs with gathered date
+previous_time = 0
+ids = []
+
+
 def get_ids_with_data():
     ''' Fetch the list of tokens with data over ssh. '''
 
-    ssh_client.connect(hostname=data_server, username=ssh_username, pkey=rsa_key)
-    sftp_client = ssh_client.open_sftp()
-    remote_file = data_folder + '/ids_with_data'
-    print(remote_file)
-    id_file = sftp_client.file(remote_file, mode='r', bufsize=1)
-    ids = [int(id) for id in id_file]
-    id_file.close()
+    global previous_time
+    global ids
+
+    this_time = time.time()
+    print(this_time - previous_time)
+    if this_time - previous_time > 60:
+        ssh_client.connect(hostname=data_server, username=ssh_username, pkey=rsa_key)
+        sftp_client = ssh_client.open_sftp()
+        remote_file = data_folder + '/ids_with_data'
+        print(remote_file)
+        id_file = sftp_client.file(remote_file, mode='r', bufsize=1)
+        ids = [int(id) for id in id_file]
+        id_file.close()
+
+    previous_time = this_time
+
     return ids
