@@ -56,16 +56,14 @@ def get_ids_with_data():
     global ids
 
     this_time = time.time()
-    print(this_time - previous_time)
     if this_time - previous_time > 60:
         ssh_client.connect(hostname=data_server, username=ssh_username, pkey=rsa_key)
         sftp_client = ssh_client.open_sftp()
         remote_file = data_folder + '/ids_with_data'
-        print(remote_file)
         id_file = sftp_client.file(remote_file, mode='r', bufsize=1)
         ids = [int(id) for id in id_file]
         id_file.close()
 
-    previous_time = this_time
+        previous_time = this_time
 
     return ids
