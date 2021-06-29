@@ -15,7 +15,7 @@ from pathlib import Path
 try:
     from .secret import *
 except:
-    print("Con not import secrets")
+    print("Can not import secrets")
     SECRET_KEY = "11a085507ede3417a546e9a46e770e3e0344255d1fb6feea382154b8f63671e8"
     polar_key = "None"
     polar_secret = "None"
