@@ -75,7 +75,10 @@ class User(AbstractUser):
     home_address = models.CharField(
                 'home address', max_length=50, blank=True,
                 help_text=mark_safe(
-                  "<ul><li>Address for receiving the Polar fitness tracker. It can be any address within Finland where you would like to receive the fitness tracker. (Don't fill if you already have one.)</li></ul>"
+                  """<ul>
+                  <li>Address for receiving the Polar fitness tracker. It can be any address within Finland where you would like to receive the fitness tracker. (Don't fill if you already have one.)</li>
+                  <li>The size of the fitness tracker is M/L, which means wrist circumference 155–210 mm.</li>
+                  </ul>"""
                 )
               )
 
