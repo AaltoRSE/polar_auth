@@ -39,11 +39,11 @@ class UserRegisterForm(UserCreationForm):
         return email
 
     def clean(self):
-        home_address = self.cleaned_data['home_address']
+        #home_address = self.cleaned_data['home_address']
         has_device = self.cleaned_data['has_own_device']
-        if home_address == "" and not has_device:
+        if not has_device:
             raise ValidationError(
-                "Please provide an address for mailing the fitness tracker."
+                "Please only register if you have a Polar fitness tracker of your own."
             )
 
         # The size has been removed, so don't check it
@@ -60,7 +60,7 @@ class UserRegisterForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['email', 'has_own_device', 'home_address', 'user_id']
+        fields = ['email', 'has_own_device', 'user_id']
         widgets = {'user_id': forms.HiddenInput()}
 
 

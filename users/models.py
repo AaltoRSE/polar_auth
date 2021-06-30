@@ -87,7 +87,7 @@ class User(AbstractUser):
     has_own_device = models.BooleanField(
             "I already have a Polar fitness tracker", default=False,
             help_text=mark_safe(
-              "<ul><li>Check this if you <b>don't</b> want us to send you a fitness tracker.</li></ul>"
+              "<ul><li>We have run out of fitness trackers, please only register if you have a Polar fitness tracker of your own.</li></ul>"
             )
         )
 
