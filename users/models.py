@@ -131,7 +131,7 @@ class User(AbstractUser):
     device_sent = models.BooleanField('Fitness tracker sent', default=False)
 
     # For checking if we are receiving data from the user
-    received_data = models.BooleanField('We have received data from this subject', default=False)
+    received_data = models.BooleanField('Received data', default=False)
 
     # Set the user manager
     objects = UserManager()
