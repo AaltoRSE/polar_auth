@@ -4,6 +4,7 @@ from django.core import mail
 from users.models import User, Subscriber
 import users.forms as forms
 
+
 # TestCases for the user model
 class UserTestCase(TestCase):
     def setUp(self):
@@ -266,4 +267,42 @@ class UserConsentFormTestCase(UserTestCase):
         self.assertEqual(len(mail.outbox), 1)
 
 
+class SubscriptionFormTestCase(UserTestCase):
+    def setUp(self):
+        super().setUp()
 
+        # Correct data for the form
+        self.data = {"email": "user3@aalto.fi"}
+
+    def test_valid(self):
+        ''' Check with valid data. '''
+        # Fill in the data and create initialize form
+        form = forms.SubscriptionForm(data=self.data)
+
+        # Check that the form is valid
+        self.assertTrue(form.is_valid())
+
+        # Check that saving the form adds to the database
+        form.save()
+        subscriber = Subscriber.objects.get(email="user3@aalto.fi")
+        self.assertEqual(subscriber.email, "user3@aalto.fi")
+
+    def test_with_no_email(self):
+        ''' Fail if email is not provided '''
+        # Fill in the data and create initialize form
+        self.data["email"] = ""
+        form = forms.SubscriptionForm(data=self.data)
+
+        # Check that the form is not valid
+        self.assertFalse(form.is_valid())
+        self.assertIn('email', form.errors.keys())
+
+    def test_with_non_aalto_email(self):
+        ''' Fail if the email is not under Aalto domain. '''
+        # Fill in the data and create initialize form
+        self.data["email"] = "user@example.com"
+        form = forms.SubscriptionForm(data=self.data)
+
+        # Check that the form is not valid
+        self.assertFalse(form.is_valid())
+        self.assertIn('email', form.errors.keys())
