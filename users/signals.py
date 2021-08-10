@@ -10,5 +10,6 @@ def check_enrolment(**kwargs):
     user.first_survey_done = True
     user.save()
 
-    if user.ready_to_authorize():
-        send_enrolment_email(user.email)
+    # Comment out to prevent emails on second survey
+    # if user.ready_to_authorize():
+    #     send_enrolment_email(user.email)
