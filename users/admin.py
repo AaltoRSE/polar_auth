@@ -53,17 +53,17 @@ class CustomUserAdmin(UserAdmin):
 
     def get_received_data(self, obj):
         ids = get_ids_with_data()
+
+        for response in Response.objects.all():
+            if obj.user_id == response.user_id:
+                obj.filled_surveys.add(response.survey)
+
         if obj.received_data:
             return True
         if int(obj.user_id) in ids:
             obj.received_data = True
             obj.save()
             return True
-
-        for response in Response.objects.all():
-            if obj.user_id == response.user_id:
-                obj.filled_surveys.add(response.survey)
-                obj.save()
 
         return False
 
