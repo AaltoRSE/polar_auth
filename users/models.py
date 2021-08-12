@@ -5,6 +5,8 @@ from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.utils.safestring import mark_safe
 
+from survey.models.survey import Survey
+
 
 # Create your models here.
 class UserManager(BaseUserManager):
@@ -132,6 +134,9 @@ class User(AbstractUser):
 
     # For checking if we are receiving data from the user
     received_data = models.BooleanField('Received data', default=False)
+
+    # Link to surveys the user has filled (without linking to the answers)
+    filled_surveys = models.ManyToManyField(Survey)
 
     # Set the user manager
     objects = UserManager()

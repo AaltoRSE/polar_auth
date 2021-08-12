@@ -5,6 +5,8 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.core.mail import send_mail
 
+from survey.models.response import Response
+
 from users.models import User, Subscriber
 from users.data_server import get_ids_with_data
 
@@ -37,9 +39,10 @@ def admin_email(adminobject, request, queryset):
 class CustomUserAdmin(UserAdmin):
     model = User
     list_display = ('email', 'consent', 'privacy', 'first_survey_done', 'authorized', 'device_sent', 'get_received_data')
-    list_filter = ('email', 'consent', 'privacy', 'first_survey_done', 'authorized', 'device_sent', 'received_data')
+    list_filter = ('email', 'consent', 'privacy', 'first_survey_done', 'authorized', 'device_sent', 'received_data', 'filled_surveys')
     fieldsets = (
-        (None, {'fields': ('email', 'home_address', 'size', 'consent', 'privacy', 'first_survey_done', 'password', 'authorized', 'device_sent', 'received_data')}),
+        (None, {'fields': ('email', 'home_address', 'size', 'consent', 'privacy', 'first_survey_done', 'password', 'authorized', 'device_sent', 'received_data',
+        'filled_surveys')}),
         ('Permissions', {'fields': ('is_superuser',)}),
     )
     readonly_fields = ['get_received_data']
@@ -56,6 +59,11 @@ class CustomUserAdmin(UserAdmin):
             obj.received_data = True
             obj.save()
             return True
+
+        for response in Response.objects.all():
+            if obj.user_id == response.user_id:
+                obj.filled_surveys.add(response.survey)
+
         return False
 
     get_received_data.short_description = 'Received data'
