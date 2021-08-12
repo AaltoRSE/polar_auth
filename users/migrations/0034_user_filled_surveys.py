@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('survey', '0023_auto_20210812_1351'),
+        ('survey', '0023_auto_20210812_1407'),
         ('users', '0033_alter_user_received_data'),
     ]
 
