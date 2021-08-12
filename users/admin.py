@@ -63,6 +63,7 @@ class CustomUserAdmin(UserAdmin):
         for response in Response.objects.all():
             if obj.user_id == response.user_id:
                 obj.filled_surveys.add(response.survey)
+                obj.save()
 
         return False
 
