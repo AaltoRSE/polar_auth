@@ -4,7 +4,7 @@ from survey.models.survey import Survey
 
 class SurveyNotDoneFilter(SimpleListFilter):
     title = "Survey Not Done"
-    parameter_name = "Survey"
+    parameter_name = "no_survey"
 
     def lookups(self, request, model_admin):
         return ((survey.pk, survey.name) for survey in Survey.objects.all())
