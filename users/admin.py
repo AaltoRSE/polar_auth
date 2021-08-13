@@ -40,10 +40,10 @@ def admin_email(adminobject, request, queryset):
 class CustomUserAdmin(UserAdmin):
     model = User
     list_display = ('email', 'consent', 'privacy', 'first_survey_done', 'authorized', 'device_sent', 'get_received_data')
-    list_filter = ('email', 'consent', 'privacy', 'first_survey_done', 'authorized', 'device_sent', 'received_data', 'filled_surveys', SurveyNotDoneFilter)
+    list_filter = ('email', 'consent', 'privacy', 'first_survey_done', 'authorized', 'device_sent', 'received_data', 'filled_surveys', SurveyNotDoneFilter, 'dropped_out')
     fieldsets = (
         (None, {'fields': ('email', 'home_address', 'size', 'consent', 'privacy', 'first_survey_done', 'password', 'authorized', 'device_sent', 'received_data',
-        'filled_surveys')}),
+        'filled_surveys', 'dropped_out')}),
         ('Permissions', {'fields': ('is_superuser',)}),
     )
     readonly_fields = ['get_received_data']

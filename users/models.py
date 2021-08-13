@@ -132,6 +132,9 @@ class User(AbstractUser):
     # Checked manually by an admin when the device has been posted or delivered
     device_sent = models.BooleanField('Fitness tracker sent', default=False)
 
+    # Checked manually by an admin when a user has dropped out of the study
+    dropped_out = models.BooleanField('Dropped out', default=False)
+
     # For checking if we are receiving data from the user
     received_data = models.BooleanField('Received data', default=False)
 
