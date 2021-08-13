@@ -1,5 +1,4 @@
-from django.contrib.admin import ModelAdmin, SimpleListFilter
-from survey.models.response import Response
+from django.contrib.admin import SimpleListFilter
 from survey.models.survey import Survey
 
 
