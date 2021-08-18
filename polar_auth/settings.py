@@ -19,11 +19,11 @@ except:
     SECRET_KEY = "11a085507ede3417a546e9a46e770e3e0344255d1fb6feea382154b8f63671e8"
     polar_key = "None"
     polar_secret = "None"
+    data_server_key = "None"
 
-# The path to the data server
-data_server = "127.0.0.1"
-data_folder = "/u/24/rantahj1/unix/src/polar_get"
-data_server_key = b"AAAAB3NzaC1yc2EAAAADAQABAAABAQC08Ws8rD3orCcYAlJAWyU+vq8zaUTD0D0kzmMCYbUYAZ+yVLdvTcrjhDOCo7ERFDwZie1HOXiykwC1//LhZihKaIPO5clqAksk9NB+EgAtRPFmv9PBO9P2Xz7WqXzDczEOQgbUEBzslB7I2xhbDQnXHLYOU+t/OH73i+41706HP+cORXaXeVJcuGkyBqwK19STIUUCvwrNzPfz6+6W0QF9CenwSFiPcSwihhNZfukg6jk38FU2NHJ9QRpCRzGc1IFB3kwl6aPpB8DZidjJLcfe8G1omsEbp6DXU6DJswkltljGxrwmyJ84/Hs+kq9jI1z9E4WU7uDRIlsZgkUL3UlH"
+# Details about the data server
+data_server = None  # For debugging set to None
+data_folder = "test_data_folder"
 rsa_key_file = "/u/24/rantahj1/unix/.ssh/id_rsa"
 ssh_username = None
 
