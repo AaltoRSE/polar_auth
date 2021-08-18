@@ -1,16 +1,5 @@
-from django.test import TestCase
+from .user_test_case import UserTestCase
 from users.models import User, Subscriber
-
-
-# TestCases for the user model
-class UserTestCase(TestCase):
-    def setUp(self):
-        # create 2 users
-        User.objects.create_user("user1@aalto.fi", password="a", is_admin=False, is_staff=False, is_active=True)
-        User.objects.create_user("user2@aalto.fi", password="b", is_admin=False, is_staff=False, is_active=True)
-
-        # create a subscriber
-        Subscriber.objects.create(email="user1@aalto.fi")
 
 
 class UserModelTestCase(UserTestCase):
@@ -49,8 +38,8 @@ class UserModelTestCase(UserTestCase):
         # Finally, __str__ returns the email
         self.assertEqual(str(user1), user1.email)
 
-    def test_usbscriber_creation(self):
-        subsriber1 = User.objects.get(email="user1@aalto.fi")
+    def test_susbscriber_creation(self):
+        subsriber1 = Subscriber.objects.get(email="user1@aalto.fi")
 
         # Check the email
         self.assertEqual(subsriber1.email, "user1@aalto.fi")
