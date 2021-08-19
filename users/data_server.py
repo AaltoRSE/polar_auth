@@ -1,6 +1,7 @@
 import base64
 import paramiko
 import time
+import os
 
 from polar_auth.settings import data_server, data_folder, data_server_key
 from polar_auth.settings import rsa_key_file, ssh_username
@@ -22,13 +23,25 @@ except:
 def communicate_token(polar_id, access_token, subject_id):
     ''' Communicate a token to the data server over ssh. '''
 
-    ssh_client.connect(hostname=data_server, username=ssh_username, pkey=rsa_key)
-    sftp_client = ssh_client.open_sftp()
-    remote_file = data_folder + '/new_tokens'
-    token_file = sftp_client.file(remote_file, mode='a', bufsize=1)
-    token_file.write(f'{access_token} {polar_id} {subject_id}\n')
-    token_file.flush()
-    token_file.close()
+    if data_server is not None:
+        ssh_client.connect(
+            hostname=data_server,
+            username=ssh_username,
+            pkey=rsa_key
+        )
+        sftp_client = ssh_client.open_sftp()
+        remote_file = data_folder + '/new_tokens'
+        token_file = sftp_client.file(remote_file, mode='a', bufsize=1)
+        token_file.write(f'{access_token} {polar_id} {subject_id}\n')
+        token_file.flush()
+        token_file.close()
+
+    else:
+        # For debugging: write to a local file in the data folder
+        if not os.path.exists(data_folder):
+            os.makedirs(data_folder)
+        with open(data_folder + '/new_tokens', 'a') as token_file:
+            token_file.write(f'{access_token} {polar_id} {subject_id}\n')
 
 
 # Communicate the access token to the data server

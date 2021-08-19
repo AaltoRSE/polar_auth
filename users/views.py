@@ -1,6 +1,7 @@
 import requests
 import base64
 
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import CreateView
@@ -137,6 +138,39 @@ class ConsentView(SuccessMessageMixin, UpdateView):
 @method_decorator(login_required, name='dispatch')
 class AddAuthTokenView(RedirectView):
 
+    def get_access_token(self, data, headers):
+        if settings.DEBUG:
+            url = 'https://polarremote.com/v2/oauth2/token/'
+            response = requests.post(
+                url,
+                data=data,
+                headers=headers
+            ).json()
+        else:
+            # Fake a response in debug mode
+            response = {
+                "x_user_id": "debug_id",
+                "access_token": "debug_token"
+            }
+        return response
+
+    def register_user_token(self, username, access_token):
+        # Note, there is no DEBUG equivalent of this, changes only on
+        # Polar side
+        if settings.DEBUG:
+            headers = {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': f'Bearer {access_token}'
+            }
+            json = {"member-id": username}
+
+            requests.post(
+                'https://www.polaraccesslink.com/v3/users',
+                json=json,
+                headers=headers
+            )
+
     def get_redirect_url(self, *args, **kwargs):
         # The user get's redirected here with a token in the url
         user = self.request.user
@@ -154,10 +188,7 @@ class AddAuthTokenView(RedirectView):
         }
         data = f"grant_type=authorization_code&code={token}"
 
-        token_response = requests.post('https://polarremote.com/v2/oauth2/token/',
-                          data=data,
-                          headers=headers
-                          ).json()
+        token_response = self.get_access_token(data, headers)
 
         user.polar_id = token_response["x_user_id"]
         access_token = token_response["access_token"]
@@ -172,14 +203,8 @@ class AddAuthTokenView(RedirectView):
         # Email the user
         send_enrolment_complete_email(user.email)
 
-        headers = {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': f'Bearer {token_response["access_token"]}'
-        }
-        json={"member-id": user.username}
-
-        r = requests.post('https://www.polaraccesslink.com/v3/users', json=json, headers = headers)
+        # Register the user
+        self.register_user_token(user.username, access_token)
 
         return reverse_lazy('about')
 
