@@ -59,7 +59,7 @@ class AboutInitialView(SuccessMessageMixin, CreateView):
 class EmailSubscribersView(UserPassesTestMixin, FormView):
     template_name = 'users/subscriber_email.html'
     form_class = users.forms.EmailSubscribersForm
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('main')
 
     def test_func(self):
         return self.request.user.is_superuser

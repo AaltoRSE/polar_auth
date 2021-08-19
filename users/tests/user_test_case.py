@@ -13,10 +13,9 @@ class UserTestCase(TestCase):
             self.user1_data['password'],
             is_admin=False, is_staff=False, is_active=True
         )
-        User.objects.create_user(
+        User.objects.create_superuser(
             self.user2_data['email'],
-            self.user2_data['password'],
-            is_admin=False, is_staff=False, is_active=True
+            self.user2_data['password']
         )
         self.user1 = User.objects.get(email=self.user1_data['email'])
         self.user2 = User.objects.get(email=self.user2_data['email'])
