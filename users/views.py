@@ -23,34 +23,24 @@ from polar_auth.settings import polar_key, polar_secret
 from polar_auth.settings import DEFAULT_FROM_EMAIL as from_address
 
 
-class ConsentSuccessView(TemplateView):
+class UserView(TemplateView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context['user'] = self.request.user
+        return context
+
+
+class ConsentSuccessView(UserView):
     template_name = 'users/consent_success.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        if self.request.user.is_authenticated:
-            context['user'] = self.request.user
-        return context
 
-
-class FAQView(TemplateView):
+class FAQView(UserView):
     template_name = 'faq.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        if self.request.user.is_authenticated:
-            context['user'] = self.request.user
-        return context
 
-
-class AboutView(TemplateView):
+class AboutView(UserView):
     template_name = 'about.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        if self.request.user.is_authenticated:
-            context['user'] = self.request.user
-        return context
 
 
 class AboutInitialView(SuccessMessageMixin, CreateView):
