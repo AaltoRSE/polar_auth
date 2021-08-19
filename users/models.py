@@ -139,7 +139,7 @@ class User(AbstractUser):
     received_data = models.BooleanField('Received data', default=False)
 
     # Link to surveys the user has filled (without linking to the answers)
-    filled_surveys = models.ManyToManyField(Survey)
+    filled_surveys = models.ManyToManyField(Survey, blank=True)
 
     # Set the user manager
     objects = UserManager()
