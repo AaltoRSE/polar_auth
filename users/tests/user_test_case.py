@@ -1,5 +1,6 @@
 from django.test import TestCase
 from users.models import User, Subscriber
+from survey.models.survey import Survey
 
 
 # TestCases for the user model
@@ -22,3 +23,10 @@ class UserTestCase(TestCase):
 
         # create a subscriber
         Subscriber.objects.create(email="user1@aalto.fi")
+
+        # Create an initial survey
+        Survey.objects.create(
+            name="name",
+            description="description",
+            need_logged_user=True
+        )

@@ -74,4 +74,91 @@ class UserViewTestCase(UserTestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(int(self.client.session['_auth_user_id']), new_user_pk)
 
+    def test_privacy_view(self):
+        ''' Check the privacy view redirects to the consent page or the first
+            survey
+        '''
+        self.client.login(
+            username=self.user1_data['email'],
+            password=self.user1_data['password']
+        )
 
+        # check logged in user can access
+        response = self.client.get(reverse('registration'))
+        self.assertEqual(response.status_code, 200)
+
+        # Check default redirect to consent
+        response = self.client.post(
+            reverse('privacy'), {'privacy': True}
+        )
+        self.assertRedirects(response, '/consent/')
+
+        # Check redirect to survey
+        self.user1.privacy = False
+        self.user1.consent = True
+        self.user1.save()
+
+        # Check redirect to first survey
+        response = self.client.post(
+            reverse('privacy'), {'privacy': True}
+        )
+        # Why 301?
+        self.assertRedirects(response, '/surveys/1', target_status_code=301)
+
+        # Check redirect to home
+        self.user1.privacy = False
+        self.user1.first_survey_done = True
+        self.user1.save()
+
+        response = self.client.post(
+            reverse('privacy'), {'privacy': True}
+        )
+        self.assertRedirects(response, '/')
+
+    def test_consent_view(self):
+        ''' Check the consent view redirects to privacy consent page or the first
+            survey
+        '''
+        self.client.login(
+            username=self.user1_data['email'],
+            password=self.user1_data['password']
+        )
+
+        # check logged in user can access
+        response = self.client.get(reverse('registration'))
+        self.assertEqual(response.status_code, 200)
+
+        # Check default redirect to consent
+        post_data = {
+            'field_1': True,
+            'field_2': True,
+            'field_3': True,
+            'field_4': True,
+            'field_5': True,
+            'field_6': True,
+        }
+        response = self.client.post(
+            reverse('consent'), post_data
+        )
+        self.assertRedirects(response, '/privacy/')
+
+        # Check redirect to first survey
+        self.user1.consent = False
+        self.user1.privacy = True
+        self.user1.save()
+
+        response = self.client.post(
+            reverse('consent'), post_data
+        )
+        # Why 301?
+        self.assertRedirects(response, '/surveys/1', target_status_code=301)
+
+        # Check redirect to home
+        self.user1.consent = False
+        self.user1.first_survey_done = True
+        self.user1.save()
+
+        response = self.client.post(
+            reverse('consent'), post_data
+        )
+        self.assertRedirects(response, '/')
