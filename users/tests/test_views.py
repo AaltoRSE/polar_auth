@@ -2,6 +2,8 @@ from .user_test_case import UserTestCase
 from django.urls import reverse
 from django.core import mail
 from users.models import User
+from django.conf import settings
+from polar_auth.settings import data_folder
 
 
 class UserViewTestCase(UserTestCase):
@@ -162,3 +164,31 @@ class UserViewTestCase(UserTestCase):
             reverse('consent'), post_data
         )
         self.assertRedirects(response, '/')
+
+    def test_add_auth_token_view(self):
+        with self.settings(data_server=None):
+            self.client.login(
+                username=self.user1_data['email'],
+                password=self.user1_data['password']
+            )
+
+            # Count existing tokens
+            with open(data_folder + '/new_tokens') as token_file:
+                num_lines_at_start = len(token_file.readlines())
+
+            # Post a get
+            response = self.client.get(reverse('auth_return'))
+            self.assertRedirects(response, reverse('about'))
+
+            # should have sent confirmation email
+            self.assertEqual(len(mail.outbox), 1)
+
+            # and added a token to the list of new tokens
+            with open(data_folder + '/new_tokens') as token_file:
+                lines = token_file.readlines()
+                assert(len(lines) == num_lines_at_start+1)
+                correct_line = f'debug_token debug_id {self.user1.user_id}\n'
+                self.assertEqual(lines[-1], correct_line)
+
+
+
