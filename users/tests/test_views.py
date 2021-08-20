@@ -189,5 +189,24 @@ class UserViewTestCase(UserTestCase):
                 correct_line = f'debug_token debug_id {self.user1.user_id}\n'
                 self.assertEqual(lines[-1], correct_line)
 
+    def test_authentication_view(self):
+        with self.settings(data_server=None):
+            self.client.login(
+                username=self.user1_data['email'],
+                password=self.user1_data['password']
+            )
 
+            response = self.client.get(reverse('auth'))
+            # Will redirect to the flow.polar.com domain
+            self.assertEqual(response.status_code, 302)
 
+    def test_remove_authorization_view(self):
+        with self.settings(data_server=None):
+            self.client.login(
+                username=self.user1_data['email'],
+                password=self.user1_data['password']
+            )
+
+            response = self.client.get(reverse('remove'))
+            # Will redirect to the flow.polar.com domain
+            self.assertEqual(response.status_code, 302)
