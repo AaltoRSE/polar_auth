@@ -64,7 +64,6 @@ def delete_token(subject_id):
             token_file.write(f'{subject_id}\n')
 
 
-
 # Read the list of IDs with gathered date
 previous_time = 0
 ids = []
