@@ -2,7 +2,6 @@ from .user_test_case import UserTestCase
 from django.urls import reverse
 from django.core import mail
 from users.models import User
-from django.conf import settings
 from polar_auth.settings import data_folder
 
 

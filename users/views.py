@@ -138,9 +138,22 @@ class ConsentView(SuccessMessageMixin, UpdateView):
 @method_decorator(login_required, name='dispatch')
 class AddAuthTokenView(RedirectView):
 
-    def get_access_token(self, data, headers):
+    def get_access_token(self, token):
+        ''' We ask for an access token using the received OAuth2 token
+            (this is where we authenticate ourselves)
+        '''
+        auth = f'{polar_key}:{polar_secret}'
+        auth_bytes = auth.encode('ascii')
+        base64_bytes = base64.b64encode(auth_bytes)
+        base64_auth = base64_bytes.decode('ascii')
+
+        headers = {
+          'Authorization': f'Basic {base64_auth}'
+        }
+        data = f"grant_type=authorization_code&code={token}"
+
+        url = 'https://polarremote.com/v2/oauth2/token/'
         if settings.DEBUG:
-            url = 'https://polarremote.com/v2/oauth2/token/'
             response = requests.post(
                 url,
                 data=data,
@@ -155,16 +168,16 @@ class AddAuthTokenView(RedirectView):
         return response
 
     def register_user_token(self, username, access_token):
-        # Note, there is no DEBUG equivalent of this, changes only on
+        headers = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': f'Bearer {access_token}'
+        }
+        json = {"member-id": username}
+
+        # Note that there is no DEBUG equivalent of this, changes only on
         # Polar side
         if settings.DEBUG:
-            headers = {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': f'Bearer {access_token}'
-            }
-            json = {"member-id": username}
-
             requests.post(
                 'https://www.polaraccesslink.com/v3/users',
                 json=json,
@@ -175,21 +188,9 @@ class AddAuthTokenView(RedirectView):
         # The user get's redirected here with a token in the url
         user = self.request.user
         token = self.request.GET.get('code', '')
+        token_response = self.get_access_token(token)
 
-        # We ask for an access token using the received token
-        # (this is where we authenticate ourselves)
-        auth = f'{polar_key}:{polar_secret}'
-        auth_bytes = auth.encode('ascii')
-        base64_bytes = base64.b64encode(auth_bytes)
-        base64_auth = base64_bytes.decode('ascii')
-
-        headers = {
-          'Authorization': f'Basic {base64_auth}'
-        }
-        data = f"grant_type=authorization_code&code={token}"
-
-        token_response = self.get_access_token(data, headers)
-
+        # Extract the Polar ID and the access token
         user.polar_id = token_response["x_user_id"]
         access_token = token_response["access_token"]
 
