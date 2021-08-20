@@ -208,5 +208,4 @@ class UserViewTestCase(UserTestCase):
             )
 
             response = self.client.get(reverse('remove'))
-            # Will redirect to the flow.polar.com domain
-            self.assertEqual(response.status_code, 302)
+            self.assertEqual(response.status_code, 200)

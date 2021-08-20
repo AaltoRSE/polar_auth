@@ -1,7 +1,8 @@
 from .user_test_case import UserTestCase
 from users.models import User, Subscriber
-import users.forms as forms
 from django.core import mail
+from polar_auth.settings import data_folder
+import users.forms as forms
 
 
 class UserRegisterFormTestCase(UserTestCase):
@@ -245,3 +246,42 @@ class SubscriptionFormTestCase(UserTestCase):
         # Check that the form is not valid
         self.assertFalse(form.is_valid())
         self.assertIn('email', form.errors.keys())
+
+
+class RemoveAuthorizationFormTestCase(UserTestCase):
+    def setUp(self):
+        super().setUp()
+
+        # Correct data for the form
+        self.data = {"Remove_authorization": True}
+
+    def test_valid(self):
+        ''' Check with valid data. '''
+        # Fill in the data and create initialize form
+        form = forms.RemoveAuthorizationForm(data=self.data)
+        user = User.objects.get(email="user1@aalto.fi")
+        form.instance = user
+
+        try:
+            with open(data_folder + '/delete_tokens', 'r') as token_file:
+                num_lines_at_start = len(token_file.readlines())
+        except:
+            num_lines_at_start = 0
+
+        # Set user as authorized
+        user.authorized = True
+        user.save()
+
+        # Check that the form is valid and save
+        self.assertTrue(form.is_valid())
+        form.save()
+
+        # Check that the authorization is revoked
+        self.assertFalse(user.authorized)
+
+        # Check that the user id has been added
+        with open(data_folder + '/delete_tokens', 'r') as token_file:
+            lines = token_file.readlines()
+            assert(len(lines) == num_lines_at_start+1)
+            correct_line = f'{self.user1.user_id}\n'
+            self.assertEqual(lines[-1], correct_line)

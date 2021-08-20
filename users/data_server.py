@@ -23,6 +23,7 @@ except:
 def communicate_token(polar_id, access_token, subject_id):
     ''' Communicate a token to the data server over ssh. '''
 
+    remote_file = data_folder + '/new_tokens'
     if data_server is not None:
         ssh_client.connect(
             hostname=data_server,
@@ -30,17 +31,16 @@ def communicate_token(polar_id, access_token, subject_id):
             pkey=rsa_key
         )
         sftp_client = ssh_client.open_sftp()
-        remote_file = data_folder + '/new_tokens'
         token_file = sftp_client.file(remote_file, mode='a', bufsize=1)
         token_file.write(f'{access_token} {polar_id} {subject_id}\n')
         token_file.flush()
         token_file.close()
 
     else:
-        # For debugging: write to a local file in the data folder
+        # For debugging: read a local file in the data folder
         if not os.path.exists(data_folder):
             os.makedirs(data_folder)
-        with open(data_folder + '/new_tokens', 'a') as token_file:
+        with open(remote_file, 'a') as token_file:
             token_file.write(f'{access_token} {polar_id} {subject_id}\n')
 
 
@@ -48,13 +48,21 @@ def communicate_token(polar_id, access_token, subject_id):
 def delete_token(subject_id):
     ''' Communicate a token to the data server over ssh. '''
 
-    ssh_client.connect(hostname=data_server, username=ssh_username, pkey=rsa_key)
-    sftp_client = ssh_client.open_sftp()
     remote_file = data_folder + '/delete_tokens'
-    token_file = sftp_client.file(remote_file, mode='a', bufsize=1)
-    token_file.write(f'{subject_id}\n')
-    token_file.flush()
-    token_file.close()
+    if data_server is not None:
+        ssh_client.connect(hostname=data_server, username=ssh_username, pkey=rsa_key)
+        sftp_client = ssh_client.open_sftp()
+        token_file = sftp_client.file(remote_file, mode='a', bufsize=1)
+        token_file.write(f'{subject_id}\n')
+        token_file.flush()
+        token_file.close()
+    else:
+        # For debugging: write to a local file in the data folder
+        if not os.path.exists(data_folder):
+            os.makedirs(data_folder)
+        with open(remote_file, 'a') as token_file:
+            token_file.write(f'{subject_id}\n')
+
 
 
 # Read the list of IDs with gathered date
@@ -70,12 +78,26 @@ def get_ids_with_data():
 
     this_time = time.time()
     if this_time - previous_time > 60:
-        ssh_client.connect(hostname=data_server, username=ssh_username, pkey=rsa_key)
-        sftp_client = ssh_client.open_sftp()
         remote_file = data_folder + '/ids_with_data'
-        id_file = sftp_client.file(remote_file, mode='r', bufsize=1)
-        ids = [int(id) for id in id_file]
-        id_file.close()
+
+        if data_server is not None:
+            ssh_client.connect(hostname=data_server, username=ssh_username, pkey=rsa_key)
+            sftp_client = ssh_client.open_sftp()
+            try:
+                id_file = sftp_client.file(remote_file, mode='r', bufsize=1)
+                ids = [int(id) for id in id_file]
+                id_file.close()
+            except:
+                # Assume unchanged if reading fails
+                pass
+        else:
+            # Data server not set, assume local file
+            try:
+                with open(remote_file, 'r') as id_file:
+                    ids = [int(id) for id in id_file.readlines()]
+            except:
+                # Assume unchanged if reading fails
+                pass
 
         previous_time = this_time
 
