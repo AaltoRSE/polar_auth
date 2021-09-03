@@ -61,10 +61,12 @@ class CustomUserAdmin(UserAdmin):
 
         if obj.received_data:
             return True
-        if int(obj.user_id) in ids:
-            obj.received_data = True
-            obj.save()
-            return True
+
+        for id, date in ids:
+            if int(obj.user_id) == id:
+                obj.received_data = True
+                obj.save()
+                return True
 
         return False
 

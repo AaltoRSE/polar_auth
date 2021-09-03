@@ -44,12 +44,12 @@ class DataServerTestCase(UserTestCase):
         correct_ids = [423, 53642, 213]
         with open(data_folder + '/ids_with_data', 'w') as id_file:
             for id in correct_ids:
-                id_file.write(f'{id}\n')
+                id_file.write(f'{id} date\n')
 
         # read the file
         ids = data_server.get_ids_with_data()
 
         # Check the ids are correct
-        for id1, id2 in zip(correct_ids, ids):
-            self.assertEqual(id1, id2)
+        for id1, idline in zip(correct_ids, ids):
+            self.assertEqual(id1, idline[1])
 

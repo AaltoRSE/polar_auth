@@ -84,7 +84,10 @@ def get_ids_with_data():
             sftp_client = ssh_client.open_sftp()
             try:
                 id_file = sftp_client.file(remote_file, mode='r', bufsize=1)
-                ids = [int(id) for id in id_file]
+                ids = []
+                for line in id_file.readlines():
+                    id, date = line.split(' ')
+                    ids.append((int(id), date))
                 id_file.close()
             except:
                 # Assume unchanged if reading fails
@@ -93,8 +96,12 @@ def get_ids_with_data():
             # Data server not set, assume local file
             try:
                 with open(remote_file, 'r') as id_file:
-                    ids = [int(id) for id in id_file.readlines()]
-            except:
+                    ids = []
+                    for line in id_file.readlines():
+                        id, date = line.split(' ')
+                        ids.append((int(id), date))
+            except Exception as e:
+                print(e)
                 # Assume unchanged if reading fails
                 pass
 
