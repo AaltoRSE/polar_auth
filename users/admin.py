@@ -46,7 +46,7 @@ class CustomUserAdmin(UserAdmin):
         'filled_surveys', 'dropped_out')}),
         ('Permissions', {'fields': ('is_superuser',)}),
     )
-    readonly_fields = ['get_received_data']
+    readonly_fields = ['data_received_date', 'filled_surveys']
 
     search_fields = ('email',)
     ordering = ('email',)
