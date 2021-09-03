@@ -139,7 +139,7 @@ class User(AbstractUser):
     received_data = models.BooleanField('Received data', default=False)
 
     # The latest date data has been received
-    date_received_date = models.DateField('Data received', null=True, default=None)
+    data_received_date = models.DateField('Data received', null=True, default=None)
 
     # Link to surveys the user has filled (without linking to the answers)
     filled_surveys = models.ManyToManyField(Survey, blank=True)
