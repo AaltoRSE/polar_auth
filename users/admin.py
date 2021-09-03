@@ -40,9 +40,9 @@ def admin_email(adminobject, request, queryset):
 class CustomUserAdmin(UserAdmin):
     model = User
     list_display = ('email', 'consent', 'privacy', 'first_survey_done', 'authorized', 'device_sent', 'get_received_data')
-    list_filter = ('email', 'consent', 'privacy', 'first_survey_done', 'authorized', 'device_sent', 'received_data', 'filled_surveys', SurveyNotDoneFilter, 'dropped_out')
+    list_filter = ('email', 'consent', 'privacy', 'first_survey_done', 'authorized', 'device_sent', 'data_received_date', 'filled_surveys', SurveyNotDoneFilter, 'dropped_out')
     fieldsets = (
-        (None, {'fields': ('email', 'home_address', 'size', 'consent', 'privacy', 'first_survey_done', 'password', 'authorized', 'device_sent', 'received_data',
+        (None, {'fields': ('email', 'home_address', 'size', 'consent', 'privacy', 'first_survey_done', 'password', 'authorized', 'device_sent', 'data_received_date',
         'filled_surveys', 'dropped_out')}),
         ('Permissions', {'fields': ('is_superuser',)}),
     )
@@ -59,20 +59,20 @@ class CustomUserAdmin(UserAdmin):
             if obj.user_id == response.user_id:
                 obj.filled_surveys.add(response.survey)
 
-        if obj.received_data:
-            return True
+        if obj.data_received_date is not None:
+            return obj.data_received_date
 
         for id, date in ids:
             if int(obj.user_id) == id:
                 obj.received_data = True
+                obj.data_received_date = date
                 obj.save()
-                return True
+                return date
 
-        return False
+        return None
 
-    get_received_data.short_description = 'Received data'
+    get_received_data.short_description = 'Data received date'
     get_received_data.admin_order_field = 'received_data'
-    get_received_data.boolean = True
 
     def get_actions(self, request):
         actions = super().get_actions(request)
