@@ -59,9 +59,6 @@ class CustomUserAdmin(UserAdmin):
             if obj.user_id == response.user_id:
                 obj.filled_surveys.add(response.survey)
 
-        if obj.data_received_date is not None:
-            return obj.data_received_date
-
         for id, date in ids:
             if int(obj.user_id) == id:
                 obj.received_data = True
