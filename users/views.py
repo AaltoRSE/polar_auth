@@ -153,7 +153,7 @@ class AddAuthTokenView(RedirectView):
         data = f"grant_type=authorization_code&code={token}"
 
         url = 'https://polarremote.com/v2/oauth2/token/'
-        if settings.DEBUG:
+        if not settings.TESTING:
             response = requests.post(
                 url,
                 data=data,
@@ -177,7 +177,7 @@ class AddAuthTokenView(RedirectView):
 
         # Note that there is no DEBUG equivalent of this, changes only on
         # Polar side
-        if settings.DEBUG:
+        if not settings.TESTING:
             requests.post(
                 'https://www.polaraccesslink.com/v3/users',
                 json=json,
