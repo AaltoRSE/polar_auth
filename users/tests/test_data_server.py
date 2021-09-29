@@ -48,6 +48,7 @@ class DataServerTestCase(UserTestCase):
 
         # read the file
         ids = data_server.get_ids_with_data()
+        print(ids)
 
         # Check the ids are correct
         for id1, idline in zip(correct_ids, ids):
