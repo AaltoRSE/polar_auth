@@ -40,6 +40,6 @@ class UserTestCase(TestCase):
             need_logged_user=True
         )
 
-    def TearDown(self):
+    def tearDown(self):
         # Delete the test data directory and contents
         shutil.rmtree(data_folder, ignore_errors=False, onerror=None)
