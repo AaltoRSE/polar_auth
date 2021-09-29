@@ -3,8 +3,10 @@ import paramiko
 import time
 import os
 
+from django.conf import settings
 from polar_auth.settings import data_server, data_folder, data_server_key
 from polar_auth.settings import rsa_key_file, ssh_username
+
 
 # Set up an SSH client and add the data server key
 try:
@@ -74,6 +76,10 @@ def get_ids_with_data():
 
     global previous_time
     global ids
+
+    if settings.TESTING:
+        # Rerun every time in debug mode
+        previous_time = 0
 
     this_time = time.time()
     if this_time - previous_time > 60:

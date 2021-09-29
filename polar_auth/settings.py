@@ -38,6 +38,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# setting TESTING to true will cause the application to skip communication
+# with the data server and use mock data instead 
+TESTING = True
+
 ALLOWED_HOSTS = []
 
 # Result directories for the survey app
