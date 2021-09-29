@@ -11,8 +11,11 @@ class DataServerTestCase(UserTestCase):
 
     def test_communicate_token(self):
         # Count current tokens
-        with open(data_folder + '/new_tokens') as token_file:
-            num_lines_at_start = len(token_file.readlines())
+        try:
+            with open(data_folder + '/new_tokens') as token_file:
+                num_lines_at_start = len(token_file.readlines())
+        except:
+            num_lines_at_start = 0
 
         # Communicat the tokens
         data_server.communicate_token('id', 'token', self.user_id)
@@ -26,8 +29,11 @@ class DataServerTestCase(UserTestCase):
 
     def test_delete_token(self):
         # Count current ids
-        with open(data_folder + '/delete_tokens') as token_file:
-            num_lines_at_start = len(token_file.readlines())
+        try:
+            with open(data_folder + '/delete_tokens') as token_file:
+                num_lines_at_start = len(token_file.readlines())
+        except:
+            num_lines_at_start = 0
 
         # Communicate the ids
         data_server.delete_token(self.user_id)

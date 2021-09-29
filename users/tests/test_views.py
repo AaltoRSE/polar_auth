@@ -172,8 +172,11 @@ class UserViewTestCase(UserTestCase):
             )
 
             # Count existing tokens
-            with open(data_folder + '/new_tokens') as token_file:
-                num_lines_at_start = len(token_file.readlines())
+            try:
+                with open(data_folder + '/new_tokens') as token_file:
+                    num_lines_at_start = len(token_file.readlines())
+            except:
+                num_lines_at_start = 0
 
             # Post a get
             response = self.client.get(reverse('auth_return'))

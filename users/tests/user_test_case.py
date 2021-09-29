@@ -1,11 +1,20 @@
 from django.test import TestCase
 from users.models import User, Subscriber
 from survey.models.survey import Survey
+from polar_auth.settings import data_folder
+import shutil
+import os
 
 
 # TestCases for the user model
 class UserTestCase(TestCase):
     def setUp(self):
+        # Delete the test data directory and contents
+        shutil.rmtree(data_folder, ignore_errors=True, onerror=None)
+
+        # Create the directory, assuming it's there but empty
+        os.mkdir(data_folder)
+
         # create 2 users
         self.user1_data = {'email': "user1@aalto.fi", "password": "a"}
         self.user2_data = {'email': "user2@aalto.fi", "password": "b"}
@@ -30,3 +39,7 @@ class UserTestCase(TestCase):
             description="description",
             need_logged_user=True
         )
+
+    def TearDown(self):
+        # Delete the test data directory and contents
+        shutil.rmtree(data_folder, ignore_errors=False, onerror=None)
