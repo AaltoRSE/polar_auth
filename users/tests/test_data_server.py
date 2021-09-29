@@ -51,5 +51,6 @@ class DataServerTestCase(UserTestCase):
 
         # Check the ids are correct
         for id1, idline in zip(correct_ids, ids):
-            self.assertEqual(id1, idline[1])
+            self.assertEqual(id1, idline[0])
+            self.assertEqual("date\n", idline[1])
 
