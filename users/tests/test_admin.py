@@ -17,14 +17,14 @@ class UserAdminTestCase(UserTestCase):
         '''
         # Log in as the admin user
         self.client.login(
-            username=self.user1_data['email'],
-            password=self.user1_data['password']
+            username=self.user2_data['email'],
+            password=self.user2_data['password']
         )
 
         # Create the admin page and run get_actions
         admin = CustomUserAdmin(model=User, admin_site=AdminSite())
         request = self.request_factory.get('/')
-        request.user = self.user1
+        request.user = self.user2
         actions = admin.get_actions(request)
 
         # Check that the actons
@@ -66,14 +66,14 @@ class SubscriberAdminTestCase(UserTestCase):
         '''
         # Log in as the admin user
         self.client.login(
-            username=self.user1_data['email'],
-            password=self.user1_data['password']
+            username=self.user2_data['email'],
+            password=self.user2_data['password']
         )
 
         # Create the admin page and run get_actions
         admin = SubscriberAdmin(model=Subscriber, admin_site=AdminSite())
         request = self.request_factory.get('/')
-        request.user = self.user1
+        request.user = self.user2
         actions = admin.get_actions(request)
 
         # Check that the actons
