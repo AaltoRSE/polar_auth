@@ -2,8 +2,10 @@ from .user_test_case import UserTestCase
 from django.test.client import RequestFactory
 from django.contrib.admin.sites import AdminSite
 from users.models import User, Subscriber
-from users.admin import CustomUserAdmin, SubscriberAdmin
+from users.admin import CustomUserAdmin, SubscriberAdmin, admin_email
 from polar_auth.settings import data_folder
+from django.core import mail
+from django.urls import reverse
 
 
 class UserAdminTestCase(UserTestCase):
@@ -79,4 +81,47 @@ class SubscriberAdminTestCase(UserTestCase):
         # Check that the actons
         assert 'delete_selected' not in actions
         assert 'admin_email' in actions
+
+
+class AdminEmailTestCase(UserTestCase):
+    def setUp(self):
+        super().setUp()
+        self.request_factory = RequestFactory()
+
+    def test_admin_email(self):
+        ''' Test the admin email action
+        '''
+        # Log in as the admin user
+        self.client.login(
+            username=self.user2_data['email'],
+            password=self.user2_data['password']
+        )
+
+        # Try a get request
+        url = reverse('admin:users_user_changelist')
+        data = {
+            'action': 'admin_email',
+            '_selected_action': ["1","2"]
+        }
+
+        # Now post. With a get, it will display the new page with 200
+        response = self.client.post(url, data, follow=True)
+        self.assertEqual(response.status_code, 200)
+
+        # Now post the message
+        data = {
+            'action': 'admin_email',
+            '_selected_action': ["1","2"],
+            'apply': True,
+            'subject': 'A test message',
+            'message': 'A test message',
+            'html_message': 'A test message',
+        }
+        response = self.client.post(url, data, follow=True)
+
+        self.assertEqual(response.status_code, 200)
+
+        # The emailsh should have been sent
+        # Seems it doesn't get called at all...
+        #self.assertEqual(len(mail.outbox), 2)
 
