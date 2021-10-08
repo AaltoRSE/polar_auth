@@ -107,7 +107,6 @@ def get_ids_with_data():
                         id, date = line.split(' ')
                         ids.append((int(id), date))
             except Exception as e:
-                print(e)
                 # Assume unchanged if reading fails
                 pass
 
