@@ -101,7 +101,7 @@ class AdminEmailTestCase(UserTestCase):
         url = reverse('admin:users_user_changelist')
         data = {
             'action': 'admin_email',
-            '_selected_action': ["1","2"]
+            '_selected_action': [self.user1.id, self.user2.id]
         }
 
         # Now post. With a get, it will display the new page with 200
@@ -111,7 +111,7 @@ class AdminEmailTestCase(UserTestCase):
         # Now post the message
         data = {
             'action': 'admin_email',
-            '_selected_action': ["1","2"],
+            '_selected_action': [self.user1.id, self.user2.id],
             'apply': True,
             'subject': 'A test message',
             'message': 'A test message',
@@ -123,5 +123,5 @@ class AdminEmailTestCase(UserTestCase):
 
         # The emailsh should have been sent
         # Seems it doesn't get called at all...
-        #self.assertEqual(len(mail.outbox), 2)
+        self.assertEqual(len(mail.outbox), 2)
 
