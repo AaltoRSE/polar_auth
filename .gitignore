@@ -2,3 +2,5 @@
 db.sqlite3
 secret.py
 test_data_folder
+*_backup
+htmlcov

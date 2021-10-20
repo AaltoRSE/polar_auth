@@ -10,6 +10,7 @@ from survey.models.response import Response
 from users.models import User, Subscriber
 from users.data_server import get_ids_with_data
 from users.filters import SurveyNotDoneFilter
+from rangefilter.filters import DateRangeFilter
 
 from polar_auth.settings import DEFAULT_FROM_EMAIL as from_address
 
@@ -39,8 +40,8 @@ def admin_email(adminobject, request, queryset):
 
 class CustomUserAdmin(UserAdmin):
     model = User
-    list_display = ('email', 'consent', 'privacy', 'first_survey_done', 'authorized', 'device_sent', 'get_received_data')
-    list_filter = ('email', 'consent', 'privacy', 'first_survey_done', 'authorized', 'device_sent', 'data_received_date', 'filled_surveys', SurveyNotDoneFilter, 'dropped_out')
+    list_display = ('email', 'consent', 'privacy', 'authorized', 'device_sent', 'get_received_data')
+    list_filter = ('consent', 'privacy', 'authorized', 'device_sent', ('data_received_date', DateRangeFilter), 'filled_surveys', SurveyNotDoneFilter, 'dropped_out')
     fieldsets = (
         (None, {'fields': ('email', 'home_address', 'size', 'consent', 'privacy', 'first_survey_done', 'password', 'authorized', 'device_sent', 'data_received_date',
         'filled_surveys', 'dropped_out')}),

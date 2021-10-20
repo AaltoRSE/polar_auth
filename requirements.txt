@@ -1,3 +1,4 @@
 Django==3.2
 git+git://github.com/AaltoRSE/django-survey
+django-admin-rangefilter
 paramiko

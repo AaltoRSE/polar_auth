@@ -39,7 +39,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DEBUG = True
 
 # setting TESTING to true will cause the application to skip communication
-# with the data server and use mock data instead 
+# with the data server and use mock data instead
 TESTING = True
 
 ALLOWED_HOSTS = []
@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'users',
     'bootstrapform',
     'survey',
+    'rangefilter'
 ]
 
 MIDDLEWARE = [
