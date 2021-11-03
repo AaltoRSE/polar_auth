@@ -106,7 +106,9 @@
 {%if not user.is_authenticated %}
 <div class="row">
   <div class="col">
-    <a class="btn btn-primary float-end mx-1" href="/registration">Register</a>
+    {% if registration_active %}
+      <a class="btn btn-primary float-end mx-1" href="/registration">Register</a>
+    {% endif %}
     <a class="btn btn-primary float-end mx-1" href="/login">Login</a>
   </div>
 </div>

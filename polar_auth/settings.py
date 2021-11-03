@@ -27,6 +27,10 @@ data_folder = "test_data_folder"
 rsa_key_file = "/u/24/rantahj1/unix/.ssh/id_rsa"
 ssh_username = None
 
+# Toggle whether to allow new registrations
+REGISTRATION_ACTIVE = False
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 

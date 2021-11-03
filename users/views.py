@@ -15,6 +15,7 @@ from django.contrib.auth import authenticate, login
 from django.core.mail import send_mass_mail
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 
 import users.forms
 from users.data_server import communicate_token
@@ -42,6 +43,11 @@ class FAQView(UserView):
 
 class AboutView(UserView):
     template_name = 'about.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['registration_active'] = settings.REGISTRATION_ACTIVE
+        return context
 
 
 class AboutInitialView(SuccessMessageMixin, CreateView):
@@ -85,6 +91,18 @@ class RegistrationView(SuccessMessageMixin, CreateView):
     template_name = 'users/registration.html'
     form_class = users.forms.UserRegisterForm
     success_message = "Your profile was created successfully"
+
+    def get(self, request):
+        if settings.REGISTRATION_ACTIVE:
+            return super().get(request)
+        else:
+            return redirect('main')
+
+    def post(self, request):
+        if settings.REGISTRATION_ACTIVE:
+            return super().post(request)
+        else:
+            return redirect('main')
 
     def form_valid(self, form):
         form.save()
